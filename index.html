@@ -24,7 +24,129 @@
         <h2>مرحباً بكم في موقعنا الإسلامي</h2>
         <p>هذا الموقع يحتوي على القرآن الكريم، الأحاديث النبوية، ومقالات إسلامية.</p>
     </section>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء باركود للبيانات الشخصية</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            direction: rtl;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        input[type="text"], input[type="email"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="button"] {
+            background-color: #004f4f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        input[type="button"]:hover {
+            background-color: #003b3b;
+        }
+        #barcode {
+            margin-top: 20px;
+        }
+        .social-links {
+            margin-top: 30px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            font-size: 1.5em;
+            text-decoration: none;
+            color: #004f4f;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #ffd700;
+        }
+        .contact-info {
+            margin-top: 30px;
+            font-size: 1.1em;
+            color: #004f4f;
+        }
+    </style>
+</head>
+<body>
+    <h1>إنشاء باركود للبيانات الشخصية</h1>
 
+    <form id="barcodeForm">
+        <label for="name">الاسم:</label>
+        <input type="text" id="name" placeholder="أدخل اسمك" required>
+
+        <label for="email">البريد الإلكتروني:</label>
+        <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني" required>
+
+        <label for="phone">رقم الهاتف:</label>
+        <input type="text" id="phone" placeholder="أدخل رقم هاتفك" required>
+
+        <input type="button" value="إنشاء الباركود" onclick="generateBarcode()">
+    </form>
+
+    <svg id="barcode"></svg>
+
+    <!-- روابط التواصل الاجتماعي -->
+    <div class="social-links">
+        <a href="https://www.facebook.com" target="_blank">فيسبوك</a>
+        <a href="https://wa.me/" target="_blank">واتساب</a>
+        <a href="https://twitter.com" target="_blank">إكس</a>
+    </div>
+
+    <!-- معلومات التواصل -->
+    <div class="contact-info">
+        <p>العنوان: شارع المثال، المدينة، البلد</p>
+        <p>الموقع الإلكتروني: <a href="https://abo-habyba.github.io" target="_blank">abo-habyba.github.io</a></p>
+    </div>
+
+    <script>
+        function generateBarcode() {
+            // الحصول على البيانات من النموذج
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+
+            // دمج البيانات في سلسلة نصية واحدة
+            var personalData = 'الاسم: ' + name + '\nالبريد الإلكتروني: ' + email + '\nرقم الهاتف: ' + phone;
+
+            // إنشاء الباركود باستخدام JsBarcode
+            JsBarcode("#barcode", personalData, {
+                format: "CODE128", // صيغة الباركود
+                lineColor: "#000",
+                width: 2,
+                height: 100,
+                displayValue: false
+            });
+        }
+    </script>
+</body>
+</html>
     <footer>
         <p>هيثم محمد عطية © 2024 جميع الحقوق محفوظة</p>
     </footer>
