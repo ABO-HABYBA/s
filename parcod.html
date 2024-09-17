@@ -161,6 +161,8 @@
                     link.download = 'barcode.' + format;
                     link.click();
                 }
+            }).catch(error => {
+                console.error("Error generating image: ", error);
             });
         }
     </script>
