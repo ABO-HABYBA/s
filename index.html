@@ -19,12 +19,8 @@
             </ul>
         </nav>
     </header>
-
     <section>
-        <h2>مرحباً بكم في موقعنا الإسلامي</h2>
-        <p>هذا الموقع يحتوي على القرآن الكريم، الأحاديث النبوية، ومقالات إسلامية.</p>
-    </section>
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -45,19 +41,20 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 600px;
             margin: auto;
         }
         label, input {
             display: block;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-size: 1.1em;
         }
-        input[type="text"], input[type="email"] {
+        input[type="text"], input[type="email"], textarea {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            width: 100%;
         }
         input[type="button"] {
             background-color: #004f4f;
@@ -67,6 +64,7 @@
             font-size: 1.2em;
             cursor: pointer;
             border-radius: 5px;
+            margin-top: 20px;
         }
         input[type="button"]:hover {
             background-color: #003b3b;
@@ -74,23 +72,8 @@
         #barcode {
             margin-top: 20px;
         }
-        .social-links {
-            margin-top: 30px;
-        }
-        .social-links a {
-            margin: 0 10px;
-            font-size: 1.5em;
-            text-decoration: none;
-            color: #004f4f;
-            transition: color 0.3s ease;
-        }
-        .social-links a:hover {
-            color: #ffd700;
-        }
-        .contact-info {
-            margin-top: 30px;
-            font-size: 1.1em;
-            color: #004f4f;
+        .social-inputs input {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -107,23 +90,37 @@
         <label for="phone">رقم الهاتف:</label>
         <input type="text" id="phone" placeholder="أدخل رقم هاتفك" required>
 
+        <label for="mobile">رقم الموبايل:</label>
+        <input type="text" id="mobile" placeholder="أدخل رقم موبايلك" required>
+
+        <label for="address">العنوان:</label>
+        <textarea id="address" placeholder="أدخل عنوانك" required></textarea>
+
+        <label for="additional-address">عنوان إضافي (اختياري):</label>
+        <textarea id="additional-address" placeholder="أدخل عنوان إضافي (إذا وُجد)"></textarea>
+
+        <label for="website">الموقع الإلكتروني:</label>
+        <input type="text" id="website" placeholder="أدخل رابط موقعك الإلكتروني" required>
+
+        <h3>روابط التواصل الاجتماعي</h3>
+        <div class="social-inputs">
+            <label for="facebook">فيسبوك:</label>
+            <input type="text" id="facebook" placeholder="رابط حساب فيسبوك">
+
+            <label for="whatsapp">واتساب:</label>
+            <input type="text" id="whatsapp" placeholder="رابط واتساب">
+
+            <label for="x">إكس (تويتر سابقاً):</label>
+            <input type="text" id="x" placeholder="رابط حساب إكس">
+
+            <label for="instagram">إنستجرام:</label>
+            <input type="text" id="instagram" placeholder="رابط حساب إنستجرام">
+        </div>
+
         <input type="button" value="إنشاء الباركود" onclick="generateBarcode()">
     </form>
 
     <svg id="barcode"></svg>
-
-    <!-- روابط التواصل الاجتماعي -->
-    <div class="social-links">
-        <a href="https://www.facebook.com" target="_blank">فيسبوك</a>
-        <a href="https://wa.me/" target="_blank">واتساب</a>
-        <a href="https://twitter.com" target="_blank">إكس</a>
-    </div>
-
-    <!-- معلومات التواصل -->
-    <div class="contact-info">
-        <p>العنوان: شارع المثال، المدينة، البلد</p>
-        <p>الموقع الإلكتروني: <a href="https://abo-habyba.github.io" target="_blank">abo-habyba.github.io</a></p>
-    </div>
 
     <script>
         function generateBarcode() {
@@ -131,9 +128,28 @@
             var name = document.getElementById('name').value;
             var email = document.getElementById('email').value;
             var phone = document.getElementById('phone').value;
+            var mobile = document.getElementById('mobile').value;
+            var address = document.getElementById('address').value;
+            var additionalAddress = document.getElementById('additional-address').value;
+            var website = document.getElementById('website').value;
+            var facebook = document.getElementById('facebook').value;
+            var whatsapp = document.getElementById('whatsapp').value;
+            var x = document.getElementById('x').value;
+            var instagram = document.getElementById('instagram').value;
 
             // دمج البيانات في سلسلة نصية واحدة
-            var personalData = 'الاسم: ' + name + '\nالبريد الإلكتروني: ' + email + '\nرقم الهاتف: ' + phone;
+            var personalData = 
+                'الاسم: ' + name + '\n' +
+                'البريد الإلكتروني: ' + email + '\n' +
+                'رقم الهاتف: ' + phone + '\n' +
+                'رقم الموبايل: ' + mobile + '\n' +
+                'العنوان: ' + address + '\n' +
+                (additionalAddress ? 'عنوان إضافي: ' + additionalAddress + '\n' : '') +
+                'الموقع الإلكتروني: ' + website + '\n' +
+                (facebook ? 'فيسبوك: ' + facebook + '\n' : '') +
+                (whatsapp ? 'واتساب: ' + whatsapp + '\n' : '') +
+                (x ? 'إكس: ' + x + '\n' : '') +
+                (instagram ? 'إنستجرام: ' + instagram + '\n' : '');
 
             // إنشاء الباركود باستخدام JsBarcode
             JsBarcode("#barcode", personalData, {
@@ -147,8 +163,17 @@
     </script>
 </body>
 </html>
+    
+
+
+        
+    <section>
+        <h2>مرحباً بكم في موقعنا الإسلامي</h2>
+        <p>هذا الموقع يحتوي على القرآن الكريم، الأحاديث النبوية، ومقالات إسلامية.</p>
+    </section>
+
     <footer>
-        <p>هيثم محمد عطية © 2024 جميع الحقوق محفوظة</p>
+        <p>© 2024 جميع الحقوق محفوظة</p>
     </footer>
 </body>
 </html>
