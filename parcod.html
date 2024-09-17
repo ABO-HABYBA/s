@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إنشاء باركود للبيانات الشخصية</title>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -96,7 +98,9 @@
         </div>
 
         <input type="button" value="إنشاء الباركود" onclick="generateBarcode()">
-        <button type="button" onclick="downloadBarcode()">تنزيل الباركود</button>
+        <button type="button" onclick="downloadBarcode('png')">تنزيل كصورة PNG</button>
+        <button type="button" onclick="downloadBarcode('jpg')">تنزيل كصورة JPG</button>
+        <button type="button" onclick="downloadBarcode('pdf')">تنزيل كملف PDF</button>
     </form>
 
     <svg id="barcode"></svg>
@@ -140,24 +144,24 @@
             });
         }
 
-        function downloadBarcode() {
-            // الحصول على عنصر الباركود
+        function downloadBarcode(format) {
             var barcode = document.querySelector("#barcode");
 
-            // تحويل الباركود إلى صورة بيانات (Data URL)
-            var barcodeImage = barcode.querySelector('image');
-            var imageUrl = barcodeImage ? barcodeImage.getAttribute('href') : '';
+            html2canvas(barcode).then(canvas => {
+                var dataURL = canvas.toDataURL('image/' + format);
 
-            // إذا كان هناك صورة
-            if (imageUrl) {
-                // إنشاء رابط لتنزيل الصورة
-                var link = document.createElement('a');
-                link.href = imageUrl;
-                link.download = 'barcode.png'; // اسم الملف عند تنزيله
-                link.click(); // محاكاة النقر على الرابط لتنزيل الصورة
-            } else {
-                alert('يرجى أولاً إنشاء الباركود قبل محاولة تنزيله.');
-            }
+                if (format === 'pdf') {
+                    var { jsPDF } = window.jspdf;
+                    var pdf = new jsPDF();
+                    pdf.addImage(dataURL, 'PNG', 10, 10);
+                    pdf.save('barcode.pdf');
+                } else {
+                    var link = document.createElement('a');
+                    link.href = dataURL;
+                    link.download = 'barcode.' + format;
+                    link.click();
+                }
+            });
         }
     </script>
 </body>
