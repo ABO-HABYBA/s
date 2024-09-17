@@ -22,7 +22,7 @@
             max-width: 600px;
             margin: auto;
         }
-        label, input {
+        label, input, textarea {
             display: block;
             width: 100%;
             margin-bottom: 10px;
@@ -34,7 +34,7 @@
             border-radius: 5px;
             width: 100%;
         }
-        input[type="button"] {
+        input[type="button"], button {
             background-color: #004f4f;
             color: white;
             border: none;
@@ -44,7 +44,7 @@
             border-radius: 5px;
             margin-top: 20px;
         }
-        input[type="button"]:hover {
+        input[type="button"]:hover, button:hover {
             background-color: #003b3b;
         }
         #barcode {
@@ -96,6 +96,7 @@
         </div>
 
         <input type="button" value="إنشاء الباركود" onclick="generateBarcode()">
+        <button type="button" onclick="downloadBarcode()">تنزيل الباركود</button>
     </form>
 
     <svg id="barcode"></svg>
@@ -138,7 +139,26 @@
                 displayValue: false
             });
         }
+
+        function downloadBarcode() {
+            // الحصول على عنصر الباركود
+            var barcode = document.querySelector("#barcode");
+
+            // تحويل الباركود إلى صورة بيانات (Data URL)
+            var barcodeImage = barcode.querySelector('image');
+            var imageUrl = barcodeImage ? barcodeImage.getAttribute('href') : '';
+
+            // إذا كان هناك صورة
+            if (imageUrl) {
+                // إنشاء رابط لتنزيل الصورة
+                var link = document.createElement('a');
+                link.href = imageUrl;
+                link.download = 'barcode.png'; // اسم الملف عند تنزيله
+                link.click(); // محاكاة النقر على الرابط لتنزيل الصورة
+            } else {
+                alert('يرجى أولاً إنشاء الباركود قبل محاولة تنزيله.');
+            }
+        }
     </script>
 </body>
 </html>
-
