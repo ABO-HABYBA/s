@@ -32,6 +32,9 @@
             <p>Paste a URL or Enter a text to create a QR code</p>
 
             <div class="generator-form">
+                
+                <input type="text" placeholder="Enter a text or URL">
+                <input type="text" placeholder="Enter a text or URL">
                 <input type="text" placeholder="Enter a text or URL">
                 <button>Generate QR Code</button>
             </div>
