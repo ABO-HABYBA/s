@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Barcode Generator</h2>
+        <form id="barcodeForm">
+            <div class="form-group">
+                <label for="name">الاسم:</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">البريد الإلكتروني:</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">رقم الهاتف:</label>
+                <input type="text" class="form-control" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="mobile">رقم الموبيل:</label>
+                <input type="text" class="form-control" id="mobile" required>
+            </div>
+            <div class="form-group">
+                <label for="address">العنوان:</label>
+                <input type="text" class="form-control" id="address" required>
+            </div>
+            <div class="form-group">
+                <label for="website">الموقع الإلكتروني:</label>
+                <input type="url" class="form-control" id="website">
+            </div>
+            <div class="form-group">
+                <label for="facebook">فيس بوك:</label>
+                <input type="url" class="form-control" id="facebook">
+            </div>
+            <div class="form-group">
+                <label for="whatsapp">واتس اب:</label>
+                <input type="text" class="form-control" id="whatsapp">
+            </div>
+            <div class="form-group">
+                <label for="x">أكس:</label>
+                <input type="text" class="form-control" id="x">
+            </div>
+            <div class="form-group">
+                <label for="instagram">انستجرام:</label>
+                <input type="text" class="form-control" id="instagram">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="generateBarcode()">إنشاء باركود</button>
+        </form>
+        <div class="mt-4 text-center">
+            <canvas id="barcode"></canvas>
+            <br>
+            <button class="btn btn-success mt-2" onclick="downloadBarcode('png')">تحميل الباركود (PNG)</button>
+            <button class="btn btn-success mt-2" onclick="downloadBarcode('jpg')">تحميل الباركود (JPG)</button>
+            <button class="btn btn-success mt-2" onclick="downloadBarcode('pdf')">تحميل الباركود (PDF)</button>
+        </div>
+    </div>
+
+    <script>
+        function generateBarcode() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const mobile = document.getElementById('mobile').value;
+            const address = document.getElementById('address').value;
+            const website = document.getElementById('website').value;
+            const facebook = document.getElementById('facebook').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const x = document.getElementById('x').value;
+            const instagram = document.getElementById('instagram').value;
+
+            const data = `Name: ${name}, Email: ${email}, Phone: ${phone}, Mobile: ${mobile}, Address: ${address}, Website: ${website}, Facebook: ${facebook}, WhatsApp: ${whatsapp}, X: ${x}, Instagram: ${instagram}`;
+            JsBarcode("#barcode", data, {
+                format: "CODE128",
+                displayValue: true
+            });
+        }
+
+        function downloadBarcode(format) {
+            html2canvas(document.getElementById('barcode')).then(canvas => {
+                let link = document.createElement('a');
+                link.href = canvas.toDataURL(`image/${format}`);
+                link.download = `barcode.${format}`;
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
