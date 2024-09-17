@@ -32,7 +32,10 @@
             <p>Paste a URL or Enter a text to create a QR code</p>
 
             <div class="generator-form">
-                
+            </div>
+            <div class="form-group">
+                <label for="email">البريد الإلكتروني:</label>
+                <input type="email" class="form-control" id="email" required>
                 <input type="text" placeholder="Enter a text or URL">
                 <input type="text" placeholder="Enter a text or URL">
                 <input type="text" placeholder="Enter a text or URL">
