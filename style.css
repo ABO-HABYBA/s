@@ -1,20 +1,18 @@
 /* إعدادات عامة */
 body {
     font-family: 'Amiri', serif;
-    background-color: #f7f4e9; /* لون بيج هادئ للخلفية */
+    background-color: #f9f9f9; /* خلفية فاتحة */
     margin: 0;
     padding: 0;
     color: #333; /* لون النص */
-    direction: rtl; /* من اليمين إلى اليسار للنصوص العربية */
 }
 
 /* ترويسة الموقع */
 header {
-    background-color: #2a5d67; /* لون أخضر هادئ */
+    background-color: #003366; /* لون أزرق غامق مشابه للدرر السنية */
     color: white;
     padding: 20px;
     text-align: center;
-    border-bottom: 5px solid #d4af37; /* خط ذهبي لتزيين */
 }
 
 /* شريط التنقل */
@@ -24,9 +22,8 @@ header {
     padding: 0;
     display: flex; /* استخدام Flexbox */
     flex-direction: row-reverse; /* الاتجاه من اليمين إلى اليسار */
-    background-color: #80a09c; /* لون أخضر فاتح */
+    background-color: #0099cc; /* لون أزرق سماوي */
     padding: 10px;
-    border-bottom: 2px solid #d4af37; /* خط ذهبي */
 }
 
 /* عناصر القائمة */
@@ -45,7 +42,7 @@ header {
 
 /* التأثير عند المرور بالماوس */
 .navbar li a:hover {
-    background-color: #d4af37; /* لون ذهبي عند التمرير */
+    background-color: #ffcc00; /* لون ذهبي مشابه للدرر السنية عند التمرير */
     border-radius: 5px; /* حواف مستديرة */
 }
 
@@ -53,28 +50,41 @@ header {
 section {
     margin: 20px;
     padding: 20px;
-    background-color: #f1efe5; /* خلفية بيج فاتحة للأقسام */
+    background-color: #e6f2ff; /* خلفية فاتحة بلون أزرق فاتح */
     border-radius: 10px;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Amiri', serif;
 }
 
 /* العناوين */
 h2 {
-    color: #2a5d67; /* لون العنوان أخضر هادئ */
+    color: #003366; /* لون العنوان أزرق غامق */
     font-family: 'Amiri', serif;
     font-size: 24px;
-    border-bottom: 2px solid #d4af37; /* خط ذهبي تحت العنوان */
+}
+
+/* الأزرار */
+button {
+    background-color: #ffcc00; /* لون الزر ذهبي */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e6b800; /* تغيير لون الزر عند التمرير */
 }
 
 /* الفوتر */
 footer {
-    background-color: #2a5d67; /* أخضر هادئ */
+    background-color: #003366; /* أزرق غامق */
     color: white;
     text-align: center;
     padding: 10px;
-    border-top: 5px solid #d4af37; /* خط ذهبي */
+    margin-top: 20px;
 }
 
 footer p {
