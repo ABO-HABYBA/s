@@ -1,86 +1,46 @@
-body {
-    background-color: #f5f5f5;
-    font-family: 'Amiri', serif;
-    margin: 0;
-    padding: 0;
-}
-
+/* ترويسة الموقع */
 header {
-    background: linear-gradient(45deg, #004d40, #00796b);
-    color: white;
+    background-color: #004d40;
     padding: 20px;
     text-align: center;
-    border-bottom: 5px solid #c0b283;
-}
-
-h1, h2 {
-    font-family: 'Scheherazade', serif;
-    color: #004d40;
-}
-
-nav {
-    background-color: #004d40;
-    padding: 10px;
-    text-align: center;
-}
-
-nav a {
     color: white;
-    padding: 15px;
+}
+
+/* شريط التنقل */
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #00796b;
+}
+
+/* عناصر القائمة الأفقية */
+.navbar li {
+    float: right; /* الاتجاه من اليمين لليسار */
+}
+
+/* الروابط داخل القائمة */
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
     font-size: 18px;
 }
 
-nav a:hover {
-    background-color: #00796b;
-    border-radius: 5px;
-}
-
-section {
-    margin: 20px;
-    padding: 20px;
-    background-color: white;
-    border: 2px solid #c0b283;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    background-color: #004d40;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-top: 20px;
-}
-
-footer p {
-    margin: 0;
-}
-
-.decorative-border {
-    border-top: 4px solid #c0b283;
-    margin-top: 20px;
-    padding-top: 10px;
-}
-
-.geometric-pattern {
-    background-image: url('https://example.com/geometric-pattern.png'); /* استبدل الرابط بنمط إسلامي */
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding: 20px;
-    text-align: center;
-}
-
-button {
+/* التأثير عند المرور على العنصر */
+.navbar li a:hover {
     background-color: #c0b283;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
+    color: #004d40;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-button:hover {
-    background-color: #8d6e63;
+/* التنسيق في الشاشات الصغيرة */
+@media screen and (max-width: 600px) {
+    .navbar li {
+        float: none;
+        width: 100%;
+    }
 }
