@@ -2,7 +2,6 @@
 body {
     font-family: 'Amiri', serif;
     background-color: #f5f5f5;
-    color: #333;
     margin: 0;
     padding: 0;
 }
@@ -13,74 +12,40 @@ header {
     color: white;
     padding: 20px;
     text-align: center;
-    border-bottom: 3px solid #c0b283;
-}
-
-header h1 {
-    font-size: 36px;
-    margin: 0;
-    font-family: 'Amiri', serif;
 }
 
 /* شريط التنقل */
-nav {
-    background-color: #34495e;
-    padding: 10px;
-    text-align: center;
-}
-
-nav a {
-    color: white;
-    padding: 15px;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-nav a:hover {
-    background-color: #2ecc71;
-    border-radius: 5px;
-}
-
-/* تنسيق الأقسام */
-section {
-    margin: 20px;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    font-family: 'Amiri', serif;
-    font-size: 24px;
-    color: #2c3e50;
-}
-
-/* الفوتر */
-footer {
-    background-color: #2c3e50;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-top: 20px;
-}
-
-footer p {
+.navbar {
+    list-style-type: none; /* إزالة النقاط */
     margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #34495e; /* لون الخلفية */
+    text-align: center; /* محاذاة الروابط في الوسط */
 }
 
-/* الزرار */
-button {
-    background-color: #2ecc71;
-    border: none;
+/* عناصر القائمة */
+.navbar li {
+    display: inline-block; /* جعل العناصر تظهر جنب بعضها */
+    margin: 0 15px; /* مسافة بين العناصر */
+}
+
+/* تنسيق الروابط */
+.navbar li a {
+    color: white; /* لون النص */
+    text-decoration: none; /* إزالة الخط السفلي */
     padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+    font-size: 18px;
+    display: inline-block;
 }
 
-button:hover {
-    background-color: #27ae60;
+/* التأثير عند المرور بالماوس */
+.navbar li a:hover {
+    background-color: #2ecc71; /* تغيير لون الخلفية */
+    border-radius: 5px; /* حواف مستديرة */
+}
+
+/* الهوامش العامة */
+h1 {
+    margin-bottom: 15px;
 }
