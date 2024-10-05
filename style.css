@@ -1,18 +1,22 @@
 /* إعدادات عامة */
 body {
     font-family: 'Amiri', serif;
-    background-color: #f9f9f9; /* خلفية فاتحة */
+    background-color: #f7f4e9; /* لون بيج هادئ للخلفية */
     margin: 0;
     padding: 0;
     color: #333; /* لون النص */
+    direction: rtl; /* من اليمين إلى اليسار للنصوص العربية */
 }
 
 /* ترويسة الموقع */
 header {
-    background-color: #003366; /* لون أزرق غامق مشابه للدرر السنية */
+    background-color: #2a5d67; /* لون أخضر هادئ */
     color: white;
     padding: 20px;
     text-align: center;
+    border-bottom: 5px solid #d4af37; /* خط ذهبي لتزيين */
+    background-image: url('pattern.png'); /* يمكن إضافة نمط إسلامي كخلفية */
+    background-size: contain;
 }
 
 /* شريط التنقل */
@@ -22,8 +26,9 @@ header {
     padding: 0;
     display: flex; /* استخدام Flexbox */
     flex-direction: row-reverse; /* الاتجاه من اليمين إلى اليسار */
-    background-color: #0099cc; /* لون أزرق سماوي */
+    background-color: #80a09c; /* لون أخضر فاتح */
     padding: 10px;
+    border-bottom: 2px solid #d4af37; /* خط ذهبي */
 }
 
 /* عناصر القائمة */
@@ -38,11 +43,12 @@ header {
     padding: 10px 20px;
     font-size: 18px;
     display: inline-block;
+    background-color: transparent;
 }
 
 /* التأثير عند المرور بالماوس */
 .navbar li a:hover {
-    background-color: #ffcc00; /* لون ذهبي مشابه للدرر السنية عند التمرير */
+    background-color: #d4af37; /* لون ذهبي عند التمرير */
     border-radius: 5px; /* حواف مستديرة */
 }
 
@@ -50,43 +56,59 @@ header {
 section {
     margin: 20px;
     padding: 20px;
-    background-color: #e6f2ff; /* خلفية فاتحة بلون أزرق فاتح */
+    background-color: #f1efe5; /* خلفية بيج فاتحة للأقسام */
     border-radius: 10px;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Amiri', serif;
 }
 
 /* العناوين */
 h2 {
-    color: #003366; /* لون العنوان أزرق غامق */
+    color: #2a5d67; /* لون العنوان أخضر هادئ */
     font-family: 'Amiri', serif;
     font-size: 24px;
+    border-bottom: 2px solid #d4af37; /* خط ذهبي تحت العنوان */
 }
 
 /* الأزرار */
 button {
-    background-color: #ffcc00; /* لون الزر ذهبي */
+    background-color: #d4af37; /* لون الزر ذهبي */
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'Amiri', serif;
 }
 
 button:hover {
-    background-color: #e6b800; /* تغيير لون الزر عند التمرير */
+    background-color: #b58c30; /* تغيير لون الزر عند التمرير */
 }
 
 /* الفوتر */
 footer {
-    background-color: #003366; /* أزرق غامق */
+    background-color: #2a5d67; /* أخضر هادئ */
     color: white;
     text-align: center;
     padding: 10px;
-    margin-top: 20px;
+    border-top: 5px solid #d4af37; /* خط ذهبي */
 }
 
 footer p {
     margin: 0;
+}
+
+/* زخارف إسلامية */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('arabesque-pattern.png'); /* وضع زخارف إسلامية في الخلفية */
+    opacity: 0.1;
+    z-index: -1;
 }
