@@ -15,8 +15,6 @@ header {
     padding: 20px;
     text-align: center;
     border-bottom: 5px solid #d4af37; /* خط ذهبي لتزيين */
-    background-image: url('pattern.png'); /* يمكن إضافة نمط إسلامي كخلفية */
-    background-size: contain;
 }
 
 /* شريط التنقل */
@@ -43,7 +41,6 @@ header {
     padding: 10px 20px;
     font-size: 18px;
     display: inline-block;
-    background-color: transparent;
 }
 
 /* التأثير عند المرور بالماوس */
@@ -71,22 +68,6 @@ h2 {
     border-bottom: 2px solid #d4af37; /* خط ذهبي تحت العنوان */
 }
 
-/* الأزرار */
-button {
-    background-color: #d4af37; /* لون الزر ذهبي */
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Amiri', serif;
-}
-
-button:hover {
-    background-color: #b58c30; /* تغيير لون الزر عند التمرير */
-}
-
 /* الفوتر */
 footer {
     background-color: #2a5d67; /* أخضر هادئ */
@@ -98,17 +79,4 @@ footer {
 
 footer p {
     margin: 0;
-}
-
-/* زخارف إسلامية */
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('arabesque-pattern.png'); /* وضع زخارف إسلامية في الخلفية */
-    opacity: 0.1;
-    z-index: -1;
 }
