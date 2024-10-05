@@ -20,8 +20,9 @@ header {
     margin: 0;
     padding: 0;
     display: flex; /* استخدام Flexbox */
-    justify-content: flex-end; /* المحاذاة إلى اليمين */
+    flex-direction: row-reverse; /* الاتجاه من اليمين إلى اليسار */
     background-color: #34495e; /* لون الخلفية */
+    padding: 10px;
 }
 
 /* عناصر القائمة */
