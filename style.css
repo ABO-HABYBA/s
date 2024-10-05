@@ -22,7 +22,6 @@ header {
     margin: 0;
     padding: 0;
     display: flex; /* استخدام Flexbox */
-    flex-direction: row-reverse; /* الاتجاه من اليمين إلى اليسار */
     background-color: #0099cc; /* لون أزرق سماوي */
     padding: 10px;
 }
