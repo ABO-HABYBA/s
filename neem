@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توليد الباركود</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <h1>توليد الباركود</h1>
+    <input type="text" id="inputValue" placeholder="أدخل القيمة هنا">
+    <button onclick="generateBarcode()">توليد الباركود</button>
+    <svg id="barcode"></svg>
+
+    <script>
+        function generateBarcode() {
+            var value = document.getElementById("inputValue").value; // احصل على القيمة من حقل الإدخال
+            JsBarcode("#barcode", value, {
+                format: "CODE128",
+                displayValue: true
+            });
+        }
+    </script>
+</body>
+</html>
