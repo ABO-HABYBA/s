@@ -43,7 +43,121 @@ html
             <input type="submit" value="إرسال">
         </form>
     </section>
+-----
+    <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توليد الباركود</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #barcode {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .download-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>توليد الباركود</h1>
+        <form id="barcodeForm">
+            <input type="text" id="name" placeholder="الاسم" required>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+            <input type="tel" id="mobile" placeholder="رقم الموبيل" required>
+            <input type="text" id="address" placeholder="العنوان" required>
+            <input type="url" id="website" placeholder="الموقع الإلكتروني">
+            <input type="text" id="facebook" placeholder="فيس بوك">
+            <input type="text" id="whatsapp" placeholder="واتس">
+            <input type="text" id="x" placeholder="اكس">
+            <input type="text" id="instagram" placeholder="انستجرام">
+            <button type="button" onclick="generateBarcode()">توليد الباركود</button>
+        </form>
+        <svg id="barcode"></svg>
+        <div class="download-buttons">
+            <button id="downloadPNG" onclick="downloadBarcode('png')">تحميل كـ PNG</button>
+            <button id="downloadJPG" onclick="downloadBarcode('jpg')">تحميل كـ JPG</button>
+            <button id="downloadPDF" onclick="downloadBarcode('pdf')">تحميل كـ PDF</button>
+        </div>
+    </div>
 
+    <script>
+        function generateBarcode() {
+            var formData = new FormData(document.getElementById('barcodeForm'));
+            var data = '';
+            formData.forEach((value, key) => {
+                data += key + ': ' + value + '\\n';
+            });
+            JsBarcode("#barcode", data, {
+                format: "CODE128",
+                displayValue: true
+            });
+        }
+
+        function downloadBarcode(format) {
+            html2canvas(document.querySelector("#barcode")).then(canvas => {
+                if (format === 'png' || format === 'jpg') {
+                    var link = document.createElement('a');
+                    link.download = 'barcode.' + format;
+                    link.href = canvas.toDataURL('image/' + format);
+                    link.click();
+                } else if (format === 'pdf') {
+                    var pdf = new jsPDF();
+                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10);
+                    pdf.save('barcode.pdf');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
     <footer>
         <p>© 2024 جميع الحقوق محفوظة</p>
     </footer>
