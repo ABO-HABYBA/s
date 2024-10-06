@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء باركود</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            direction: rtl;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        input[type="text"], input[type="email"], input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="button"] {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        input[type="button"]:hover {
+            background-color: #27ae60;
+        }
+        #barcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>إنشاء باركود للبيانات</h1>
+    <form id="barcodeForm">
+        <label for="name">الاسم:</label>
+        <input type="text" id="name" placeholder="أدخل اسمك" required>
+
+        <label for="email">البريد الإلكتروني:</label>
+        <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني" required>
+
+        <label for="phone">رقم الهاتف:</label>
+        <input type="number" id="phone" placeholder="أدخل رقم هاتفك" required>
+
+        <input type="button" value="إنشاء الباركود" onclick="generateBarcode()">
+        <input type="button" value="تنزيل الباركود" onclick="downloadBarcode()">
+    </form>
+
+    <svg id="barcode"></svg>
+
+    <script>
+        function generateBarcode() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            const personalData = `الاسم: ${name}\nالبريد الإلكتروني: ${email}\nرقم الهاتف: ${phone}`;
+
+            // توليد الباركود باستخدام JsBarcode
+            JsBarcode("#barcode", personalData, {
+                format: "CODE128",
+                lineColor: "#000",
+                width: 2,
+                height: 100,
+                displayValue: false
+            });
+        }
+
+        function downloadBarcode() {
+            const barcode = document.getElementById('barcode');
+
+            // تحويل الباركود إلى صورة باستخدام html2canvas
+            html2canvas(barcode).then(canvas => {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'barcode.png';
+                link.click();
+            }).catch(err => {
+                console.error("حدث خطأ أثناء استخراج صورة الباركود:", err);
+            });
+        }
+    </script>
+</body>
+</html>
