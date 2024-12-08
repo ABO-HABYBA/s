@@ -42,3 +42,26 @@
  <script src="script.js"></script>
 </body>
 </html>
+const qrCode = document.getElementById('qr-code');
+const generateQrButton = document.getElementById('generate-qr');
+
+generateQrButton.addEventListener('click', () => {
+ const name = document.getElementById('name').value;
+ const address = document.getElementById('address').value;
+ const mobile = document.getElementById('mobile').value;
+ const facebook = document.getElementById('facebook').value;
+ const twitter = document.getElementById('twitter').value;
+ const instagram = document.getElementById('instagram').value;
+ const linkedin = document.getElementById('linkedin').value;
+
+ const data = `NAME:${name}\nADDRESS:${address}\nMOBILE:${mobile}\nFACEBOOK:${facebook}\nTWITTER:${twitter}\nINSTAGRAM:${instagram}\nLINKEDIN:${linkedin}`;
+
+ const qr = new QRCode(qrCode, {
+ text: data,
+ width: 200,
+ height: 200,
+ colorDark: '#000',
+ colorLight: '#fff',
+ correctLevel: QRCode.CorrectLevel.H
+ });
+});
