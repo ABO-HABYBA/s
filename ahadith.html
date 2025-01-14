@@ -5,7 +5,62 @@ html
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الأحاديث النبوية</title>
-    
+  <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصميم باركود</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">تصميم باركود</h1>
+        <form id="barcodeForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">الاسم</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">العنوان</label>
+                <input type="text" class="form-control" id="address">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">البريد الإلكتروني</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">رقم الهاتف</label>
+                <input type="tel" class="form-control" id="phone">
+            </div>
+            <div class="mb-3">
+                <label for="facebook" class="form-label">فيسبوك</label>
+                <input type="url" class="form-control" id="facebook">
+            </div>
+            <div class="mb-3">
+                <label for="twitter" class="form-label">تويتر</label>
+                <input type="url" class="form-control" id="twitter">
+            </div>
+            <div class="mb-3">
+                <label for="instagram" class="form-label">إنستغرام</label>
+                <input type="url" class="form-control" id="instagram">
+            </div>
+            <button type="submit" class="btn btn-primary">إنشاء الباركود</button>
+        </form>
+
+        <div id="barcodeResult" class="mt-4 text-center d-none">
+            <h2>الباركود</h2>
+            <div id="qrcode"></div>
+            <button id="downloadPNG" class="btn btn-success mt-3">تحميل كصورة</button>
+            <button id="downloadPDF" class="btn btn-info mt-3">تحميل كPDF</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>  
     <!-- رابط Google Fonts للخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     
