@@ -60,6 +60,53 @@ html
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
+    document.getElementById('barcodeForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // جمع البيانات
+    const data = {
+        name: document.getElementById('name').value,
+        address: document.getElementById('address').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        facebook: document.getElementById('facebook').value,
+        twitter: document.getElementById('twitter').value,
+        instagram: document.getElementById('instagram').value,
+    };
+
+    // تحويل البيانات إلى نص
+    const text = JSON.stringify(data);
+
+    // إنشاء الباركود
+    const qrcodeDiv = document.getElementById('qrcode');
+    qrcodeDiv.innerHTML = ''; // مسح الباركود القديم
+    new QRCode(qrcodeDiv, {
+        text: text,
+        width: 200,
+        height: 200,
+    });
+
+    // إظهار نتيجة الباركود
+    document.getElementById('barcodeResult').classList.remove('d-none');
+
+    // تحميل كصورة
+    document.getElementById('downloadPNG').addEventListener('click', function () {
+        const canvas = qrcodeDiv.querySelector('canvas');
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'barcode.png';
+        link.click();
+    });
+
+    // تحميل كPDF
+    document.getElementById('downloadPDF').addEventListener('click', function () {
+        const canvas = qrcodeDiv.querySelector('canvas');
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF();
+        pdf.addImage(imgData, 'PNG', 10, 10, 100, 100);
+        pdf.save('barcode.pdf');
+    });
+});
 </html>  
     <!-- رابط Google Fonts للخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
