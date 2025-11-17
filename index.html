@@ -1,154 +1,457 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مختصر الروابط - الخدمة مقدمة من هيثم محمد عطية</title>
-
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json" />
-
-    <!-- Favicon (your logo added) -->
-    <link rel="icon" href="logo.png" />
-
-    <!-- Meta -->
-    <meta name="theme-color" content="#1d4ed8" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختصار الروابط المحلي | الخدمة مقدمة من هيثم محمد عطية</title>
     <style>
+        /* --- تنسيقات style.css المدمجة --- */
         body {
-            font-family: "Tajawal", sans-serif;
-            background: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
             margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: center;
-            padding: 30px;
+            flex-direction: column;
+            align-items: center;
+            direction: rtl; /* دعم اللغة العربية */
         }
-        .container {
-            background: #fff;
-            padding: 25px;
-            border-radius: 18px;
+        header {
+            background-color: #007bff;
+            color: white;
             width: 100%;
-            max-width: 600px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
-            text-align: center;
+            padding: 20px 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        img.logo {
-            width: 120px;
-            margin-bottom: 15px;
-        }
-        h2 {
-            margin-top: 0;
-            color: #1d4ed8;
-        }
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #cbd5e1;
-            border-radius: 12px;
-            font-size: 18px;
-            margin-bottom: 12px;
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
         }
         button {
-            width: 100%;
-            padding: 14px;
-            background: #1d4ed8;
+            background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            transition: background-color 0.3s ease;
         }
-        button:hover { background: #1e40af; }
-        .result-box {
+        button:hover {
+            background-color: #218838;
+        }
+        #about-btn {
+            background-color: #6c757d;
+        }
+        #about-btn:hover {
+            background-color: #5a6268;
+        }
+        main {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        #shortener-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        input[type="url"], input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #shorten-btn {
+            background-color: #007bff;
+            width: 100%;
+        }
+        #shorten-btn:hover {
+            background-color: #0056b3;
+        }
+        #result-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        #result-container p {
+            margin: 0;
+            white-space: nowrap;
+        }
+        #short-url-output {
+            flex-grow: 1;
+            background-color: #e9ecef;
+        }
+        #copy-btn {
+            background-color: #17a2b8;
+        }
+        #copy-btn:hover {
+            background-color: #138496;
+        }
+        .hidden {
+            display: none !important;
+        }
+        #error-message {
+            color: red;
+            font-weight: bold;
+        }
+        #links-history h2 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        #links-history {
+            list-style: none;
+            padding: 0;
             margin-top: 15px;
-            padding: 14px;
-            background: #e0f2fe;
-            border-radius: 12px;
-            display: none;
         }
-        .stats-box {
-            margin-top: 25px;
-            padding: 16px;
-            background: #fef9c3;
-            border-radius: 12px;
+        #links-history li {
+            background-color: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid #007bff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        #links-history li .long-url {
+            color: #6c757d;
+            font-size: 0.9em;
+            word-break: break-all;
+            margin-top: 5px;
+        }
+        #links-history li .short-id {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: auto;
+        }
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close-btn {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-content h2 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        .modal-content ul {
+            list-style-type: none;
+            padding-right: 0;
+        }
+        .modal-content ul li {
+            margin-bottom: 10px;
+        }
+        .modal-content .signature {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        @media (max-width: 600px) {
+            header, main {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            #result-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            #short-url-output {
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
 
-        <img src="هيثم.png" class="logo" alt="Logo" />
-<p style="margin-top:-5px; font-size:14px; color:#334155;">haythem mohamed</p>
+    <header>
+        <h1>✂️ أداة هيثم لاختصار الروابط</h1>
+        <button id="about-btn">حول البرنامج</button>
+    </header>
 
-        <h2>مختصر الروابط</h2>
-        <p style="color:#475569; margin-top:-10px;">الخدمة مقدمة من <strong>هيثم محمد عطية</strong></p>
+    <main>
+        <section id="shortener-section">
+            <input type="url" id="long-url-input" placeholder="أدخل الرابط الطويل هنا..." required dir="ltr">
+            <button id="shorten-btn">اختصار الرابط</button>
+            <div id="result-container" class="hidden">
+                <p>الرابط المختصر:</p>
+                <input type="text" id="short-url-output" readonly dir="ltr">
+                <button id="copy-btn">نسخ</button>
+            </div>
+            <p id="error-message" class="hidden"></p>
+        </section>
 
-        <input type="text" id="urlInput" placeholder="الصق الرابط هنا..." />
-        <button onclick="shorten()">اختصار الرابط</button>
+        <section id="history-section">
+            <h2>سجل الروابط المحفوظة</h2>
+            <ul id="links-history">
+                </ul>
+        </section>
+    </main>
 
-        <div class="result-box" id="resultBox">
-            <p>الرابط المختصر:</p>
-            <a id="shortLink" href="#" target="_blank"></a>
+    <div id="about-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>حول أداة هيثم لاختصار الروابط</h2>
+            <p>هذا تطبيق ويب صغير وبسيط يعمل كأداة لاختصار الروابط الطويلة وتحويلها إلى روابط قصيرة.</p>
+            <ul>
+                <li>✅ **الوظيفة الأساسية:** تحويل الروابط الطويلة إلى معرفات قصيرة فريدة.</li>
+                <li>💾 **التخزين المحلي:** يتم حفظ جميع الروابط المختصرة محليًا في متصفحك (**localStorage**) ولا تحتاج إلى اتصال بالإنترنت للوصول إليها.</li>
+                <li>⏳ **صلاحية دائمة:** الروابط المختصرة محفوظة بشكل دائم ولا تنتهي صلاحيتها (طالما لم تقم بمسح بيانات التصفح المحلية).</li>
+                <li>⚠️ **ملاحظة هامة:** هذا البرنامج يعمل على جهازك فقط، ولا يمكن للآخرين استخدام الروابط التي تختصرها إلا إذا أرسلت لهم نفس الملف.</li>
+            </ul>
+            <p class="signature">الخدمة مقدمة من **هيثم محمد عطية**.</p>
         </div>
-
-        <div class="stats-box">
-            <h3>الإحصائيات</h3>
-            <p>عدد الروابط المختصرة حتى الآن: <span id="count">0</span></p>
-        </div>
-
     </div>
 
+    <footer>
+        <p>الخدمة مقدمة من هيثم محمد عطية &copy; 2025</p>
+    </footer>
+
     <script>
-        // localStorage Counters
-        if(!localStorage.getItem("count")) localStorage.setItem("count", 0);
-        document.getElementById("count").innerText = localStorage.getItem("count");
+        // --- أكواد script.js المدمجة ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const longUrlInput = document.getElementById('long-url-input');
+            const shortenBtn = document.getElementById('shorten-btn');
+            const resultContainer = document.getElementById('result-container');
+            const shortUrlOutput = document.getElementById('short-url-output');
+            const copyBtn = document.getElementById('copy-btn');
+            const errorMessage = document.getElementById('error-message');
+            const linksHistoryList = document.getElementById('links-history');
 
-        function shorten() {
-            let url = document.getElementById("urlInput").value.trim();
-            if(url === "") return alert("من فضلك أدخل رابطًا صحيحًا");
+            const aboutBtn = document.getElementById('about-btn');
+            const aboutModal = document.getElementById('about-modal');
+            const closeModalBtn = document.querySelector('.close-btn');
 
-            let shortID = Math.random().toString(36).substring(2, 8);
-            let shortURL = window.location.origin + "/?r=" + shortID;
+            const STORAGE_KEY = 'haitham_url_shortener_links';
 
-            localStorage.setItem(shortID, url);
+            // --- وظائف التخزين المحلي ---
+            const getLinks = () => {
+                const linksJson = localStorage.getItem(STORAGE_KEY);
+                return linksJson ? JSON.parse(linksJson) : [];
+            };
 
-            document.getElementById("shortLink").href = shortURL;
-            document.getElementById("shortLink").textContent = shortURL;
-            document.getElementById("resultBox").style.display = "block";
+            const saveLinks = (links) => {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
+            };
 
-            let newCount = Number(localStorage.getItem("count")) + 1;
-            localStorage.setItem("count", newCount);
-            document.getElementById("count").innerText = newCount;
-        }
+            // --- وظائف مساعدة ---
+            const generateShortId = () => {
+                return Math.random().toString(36).substring(2, 8);
+            };
 
-        // Redirect handler
-        let params = new URLSearchParams(window.location.search);
-        if(params.get("r")) {
-            let original = localStorage.getItem(params.get("r"));
-            if(original) window.location.href = original;
-        }
+            const displayError = (message) => {
+                errorMessage.textContent = message;
+                errorMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    errorMessage.classList.add('hidden');
+                }, 4000);
+            };
+
+            // --- وظيفة الاختصار الرئيسية ---
+            const shortenUrl = () => {
+                const longUrl = longUrlInput.value.trim();
+
+                resultContainer.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+                shortUrlOutput.value = '';
+
+                if (!longUrl) {
+                    displayError('الرجاء إدخال رابط صالح لاختصاره.');
+                    return;
+                }
+
+                try {
+                    new URL(longUrl);
+                } catch (e) {
+                    displayError('الرجاء إدخال رابط URL صحيح (يبدأ بـ http:// أو https://).');
+                    return;
+                }
+
+                let links = getLinks();
+                let shortId;
+
+                const existingLink = links.find(link => link.longUrl === longUrl);
+
+                if (existingLink) {
+                    shortId = existingLink.shortId;
+                    displayError('هذا الرابط تم اختصاره مسبقًا!');
+                } else {
+                    do {
+                        shortId = generateShortId();
+                    } while (links.some(link => link.shortId === shortId));
+
+                    const newLink = {
+                        shortId: shortId,
+                        longUrl: longUrl,
+                        timestamp: Date.now()
+                    };
+                    links.unshift(newLink);
+                    saveLinks(links);
+                }
+
+                // الرابط المختصر يعتمد على المسار المحلي للملف في جهازك
+                const currentBase = window.location.href.split('#')[0]; 
+                const shortUrl = currentBase + '#' + shortId;
+
+                shortUrlOutput.value = shortUrl;
+                resultContainer.classList.remove('hidden');
+                longUrlInput.value = '';
+
+                renderHistory();
+            };
+
+            // --- وظائف عرض السجل ---
+            const createHistoryItem = (linkObject) => {
+                const li = document.createElement('li');
+                const currentBase = window.location.href.split('#')[0];
+                const shortUrl = currentBase + '#' + linkObject.shortId;
+
+                li.innerHTML = `
+                    <div>
+                        <span class="short-id">${shortUrl}</span><br>
+                        <span class="long-url" dir="ltr">${linkObject.longUrl}</span>
+                    </div>
+                    <button class="copy-history-btn" data-url="${shortUrl}">نسخ</button>
+                `;
+                return li;
+            };
+
+            const renderHistory = () => {
+                linksHistoryList.innerHTML = '';
+                const links = getLinks();
+
+                if (links.length === 0) {
+                    linksHistoryList.innerHTML = '<p style="text-align: center; color: #6c757d;">لم يتم اختصار أي روابط بعد.</p>';
+                    return;
+                }
+
+                links.forEach(link => {
+                    const item = createHistoryItem(link);
+                    linksHistoryList.appendChild(item);
+                });
+            };
+
+            // --- وظائف معالجة الأحداث ---
+            shortenBtn.addEventListener('click', shortenUrl);
+            longUrlInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    shortenUrl();
+                }
+            });
+
+            copyBtn.addEventListener('click', () => {
+                shortUrlOutput.select();
+                document.execCommand('copy');
+                copyBtn.textContent = 'تم النسخ! ✅';
+                setTimeout(() => {
+                    copyBtn.textContent = 'نسخ';
+                }, 2000);
+            });
+
+            linksHistoryList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('copy-history-btn')) {
+                    const urlToCopy = e.target.getAttribute('data-url');
+                    navigator.clipboard.writeText(urlToCopy).then(() => {
+                        const originalText = e.target.textContent;
+                        e.target.textContent = 'تم النسخ! ✅';
+                        setTimeout(() => {
+                            e.target.textContent = originalText;
+                        }, 2000);
+                    }).catch(err => {
+                        alert('فشل في النسخ، يرجى النسخ يدوياً.');
+                    });
+                }
+            });
+
+            aboutBtn.addEventListener('click', () => {
+                aboutModal.classList.remove('hidden');
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                aboutModal.classList.add('hidden');
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === aboutModal) {
+                    aboutModal.classList.add('hidden');
+                }
+            });
+
+            // --- وظيفة توجيه الرابط المختصر ---
+            const checkRedirection = () => {
+                const hash = window.location.hash.substring(1);
+
+                if (hash) {
+                    const links = getLinks();
+                    const link = links.find(l => l.shortId === hash);
+
+                    if (link) {
+                        window.location.replace(link.longUrl);
+                    } else {
+                        alert('عذراً، المعرف القصير غير موجود على جهازك.');
+                        history.replaceState(null, null, window.location.href.split('#')[0]); // إزالة الـ hash
+                    }
+                }
+            };
+
+            // --- التهيئة ---
+            checkRedirection();
+            renderHistory();
+        });
     </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html>
-<head>
-<title>URL Shortener</title>
-</head>
-<body>
-<input type="text" id="long" placeholder="ضع الرابط الطويل" style="width:300px">
-<button onclick="shorten()">اختصار</button>
-<p id="out"></p>
-
-<script>
-function shorten() {
-    let long = document.getElementById("long").value;
-    fetch("https://tinyurl.com/api-create.php?url=" + long)
-    .then(r => r.text())
-    .then(short => document.getElementById("out").innerHTML = short);
-}
-</script>
-</body>
-</html>
-
