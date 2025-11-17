@@ -8,11 +8,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4f46e5;
-            --primary-dark: #4338ca;
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
             --secondary-color: #06b6d4;
             --success-color: #10b981;
             --danger-color: #ef4444;
+            --warning-color: #f59e0b;
             --dark-bg: #1e293b;
             --light-bg: #f8fafc;
             --text-dark: #1e293b;
@@ -34,15 +35,19 @@
         }
 
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
         }
 
         .navbar-brand {
             font-weight: bold;
             color: var(--primary-color) !important;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .main-container {
@@ -58,7 +63,7 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 3rem;
-            max-width: 700px;
+            max-width: 800px;
             width: 100%;
             animation: slideUp 0.5s ease;
         }
@@ -76,34 +81,45 @@
 
         .app-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .app-header h1 {
             color: var(--text-dark);
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .app-header p {
             color: var(--text-light);
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .icon-wrapper {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 2rem;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: 20px;
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .icon-wrapper i {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: white;
         }
 
@@ -114,26 +130,37 @@
 
         .url-input {
             width: 100%;
-            padding: 1rem 3rem 1rem 1rem;
+            padding: 1.2rem 4rem 1.2rem 1.5rem;
             border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
+            background: var(--light-bg);
         }
 
         .url-input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            background: white;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
         }
 
         .shorten-btn {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 1.2rem 2.5rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -142,32 +169,36 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
 
         .shorten-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
         }
 
         .shorten-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         .result-section {
             margin-top: 2rem;
-            padding: 1.5rem;
-            background: var(--light-bg);
-            border-radius: 12px;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-radius: 15px;
             display: none;
             animation: fadeIn 0.5s ease;
+            border: 2px solid var(--primary-color);
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
+                transform: scale(1);
             }
         }
 
@@ -177,24 +208,26 @@
 
         .result-item {
             background: white;
-            padding: 1rem;
-            border-radius: 8px;
+            padding: 1.2rem;
+            border-radius: 12px;
             margin-bottom: 1rem;
             border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
         }
 
-        .result-item:last-child {
-            margin-bottom: 0;
+        .result-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .result-label {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: var(--text-light);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
         .result-value {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--text-dark);
             word-break: break-all;
             display: flex;
@@ -203,16 +236,20 @@
             gap: 1rem;
         }
 
-        .copy-btn {
-            background: var(--primary-color);
+        .copy-btn, .share-btn, .qr-btn {
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: var(--primary-color);
         }
 
         .copy-btn:hover {
@@ -225,148 +262,263 @@
 
         .share-btn {
             background: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
         }
 
         .share-btn:hover {
             background: #0891b2;
         }
 
-        .links-history {
-            margin-top: 2rem;
+        .qr-btn {
+            background: var(--warning-color);
+        }
+
+        .qr-btn:hover {
+            background: #d97706;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .history-section {
+            margin-top: 2.5rem;
         }
 
         .history-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .history-title {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             color: var(--text-dark);
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .clear-history-btn {
-            background: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
+        .history-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-custom {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: none;
         }
 
-        .clear-history-btn:hover {
+        .btn-export {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #059669;
+        }
+
+        .btn-import {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-import:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-clear {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-clear:hover {
             background: #dc2626;
         }
 
         .history-list {
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .history-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
         }
 
         .history-item {
             background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
             border: 1px solid #e2e8f0;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .history-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
         }
 
         .history-item-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            gap: 1rem;
         }
 
         .short-url {
             color: var(--primary-color);
             font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .history-date {
-            color: var(--text-light);
-            font-size: 0.75rem;
-        }
-
-        .original-url {
-            color: var(--text-light);
-            font-size: 0.875rem;
+            font-size: 1rem;
+            flex: 1;
             word-break: break-all;
         }
 
-        .delete-btn {
+        .history-actions-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
             background: transparent;
-            color: var(--danger-color);
             border: none;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .copy-history-btn {
+            color: var(--primary-color);
+        }
+
+        .copy-history-btn:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .delete-btn {
+            color: var(--danger-color);
         }
 
         .delete-btn:hover {
             background: rgba(239, 68, 68, 0.1);
         }
 
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
+        .original-url {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            word-break: break-all;
             margin-bottom: 0.5rem;
+            line-height: 1.5;
         }
 
-        .stat-label {
-            font-size: 0.875rem;
-            opacity: 0.9;
+        .history-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .history-date {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .clicks-count {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.4;
+        }
+
+        .empty-state h5 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
         }
 
         .modal-content {
-            border-radius: 15px;
+            border-radius: 20px;
             border: none;
         }
 
         .modal-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            border-radius: 15px 15px 0 0;
+            border-radius: 20px 20px 0 0;
             border: none;
         }
 
         .modal-title {
             font-weight: 600;
+            font-size: 1.3rem;
         }
 
         .btn-close {
@@ -379,7 +531,7 @@
         }
 
         .feature-list li {
-            padding: 0.75rem 0;
+            padding: 1rem 0;
             border-bottom: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
@@ -392,33 +544,44 @@
 
         .feature-list i {
             color: var(--success-color);
-            font-size: 1.25rem;
+            font-size: 1.3rem;
         }
 
-        .empty-state {
+        .hosting-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .hosting-card {
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
             text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
+            transition: all 0.3s ease;
         }
 
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
+        .hosting-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
         }
 
-        @media (max-width: 768px) {
-            .app-card {
-                padding: 2rem;
-            }
+        .hosting-card.recommended {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.05);
+        }
 
-            .app-header h1 {
-                font-size: 1.5rem;
-            }
+        .hosting-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
 
-            .stats-section {
-                grid-template-columns: 1fr;
-            }
+        .hosting-url {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            word-break: break-all;
         }
 
         .loading-spinner {
@@ -443,54 +606,101 @@
             display: inline-block;
         }
 
-        .redirect-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.95);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            flex-direction: column;
+        .qr-modal {
+            text-align: center;
         }
 
-        .redirect-overlay.show {
-            display: flex;
-        }
-
-        .redirect-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #e2e8f0;
-            border-radius: 50%;
-            border-top-color: var(--primary-color);
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        .export-import-section {
-            margin-top: 2rem;
+        .qr-code {
+            margin: 1.5rem 0;
             padding: 1rem;
-            background: var(--light-bg);
+            background: white;
             border-radius: 12px;
+            display: inline-block;
         }
 
-        .export-import-btn {
-            margin: 0.25rem;
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+        }
+
+        .custom-toast {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideInRight 0.3s ease;
+            min-width: 300px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast-success .toast-icon {
+            color: var(--success-color);
+        }
+
+        .toast-warning .toast-icon {
+            color: var(--warning-color);
+        }
+
+        .toast-danger .toast-icon {
+            color: var(--danger-color);
+        }
+
+        .toast-info .toast-icon {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .app-card {
+                padding: 2rem;
+            }
+
+            .app-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .history-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .history-actions {
+                justify-content: center;
+            }
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
-    <!-- Redirect Overlay -->
-    <div id="redirectOverlay" class="redirect-overlay">
-        <div class="redirect-spinner"></div>
-        <h5>جاري التحويل...</h5>
-        <p class="text-muted">سيتم توجيهك إلى الرابط الأصلي خلال لحظات</p>
-        <button class="btn btn-secondary mt-3" onclick="cancelRedirect()">إلغاء التحويل</button>
-    </div>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
@@ -499,18 +709,9 @@
                 <i class="fas fa-link"></i>
                 مختصر الروابط - هيثم محمد عطية
             </a>
-            <div>
-                <button class="btn btn-outline-primary me-2" onclick="exportData()">
-                    <i class="fas fa-download"></i> تصدير
-                </button>
-                <button class="btn btn-outline-primary me-2" onclick="document.getElementById('importFile').click()">
-                    <i class="fas fa-upload"></i> استيراد
-                </button>
-                <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
-                <button class="btn btn-primary" onclick="showAbout()">
-                    <i class="fas fa-info-circle"></i> حول البرنامج
-                </button>
-            </div>
+            <button class="btn btn-primary" onclick="showAbout()">
+                <i class="fas fa-info-circle"></i> حول البرنامج
+            </button>
         </div>
     </nav>
 
@@ -521,12 +722,13 @@
                 <div class="icon-wrapper">
                     <i class="fas fa-compress-alt"></i>
                 </div>
-                <h1>مختصر الروابط المحترف</h1>
-                <p>اخصر روابطك الطويلة بشكل سريع وآمن</p>
+                <h1>مختصر الروابط الاحترافي</h1>
+                <p>روابط قصيرة وسريعة ومتاحة مدى الحياة</p>
             </div>
 
             <!-- URL Input Section -->
             <div class="url-input-group">
+                <i class="fas fa-link input-icon"></i>
                 <input 
                     type="url" 
                     id="urlInput" 
@@ -546,7 +748,10 @@
 
             <!-- Result Section -->
             <div id="resultSection" class="result-section">
-                <h5 class="mb-3">تم اختصار الرابط بنجاح!</h5>
+                <h5 class="mb-4 text-center">
+                    <i class="fas fa-check-circle text-success"></i>
+                    تم اختصار الرابط بنجاح!
+                </h5>
                 <div class="result-item">
                     <div class="result-label">الرابط الأصلي:</div>
                     <div class="result-value">
@@ -564,41 +769,60 @@
                             <button class="share-btn" onclick="shareLink()">
                                 <i class="fas fa-share"></i> مشاركة
                             </button>
+                            <button class="qr-btn" onclick="showQRCode()">
+                                <i class="fas fa-qrcode"></i> QR
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Statistics -->
-            <div class="stats-section">
+            <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-value" id="totalLinks">0</div>
-                    <div class="stat-label">إجمالي الروابط</div>
+                    <div class="stat-label">
+                        <i class="fas fa-link"></i> إجمالي الروابط
+                    </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="todayLinks">0</div>
-                    <div class="stat-label">روابط اليوم</div>
+                    <div class="stat-label">
+                        <i class="fas fa-calendar-day"></i> روابط اليوم
+                    </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="totalClicks">0</div>
-                    <div class="stat-label">إجمالي النقرات</div>
+                    <div class="stat-label">
+                        <i class="fas fa-mouse-pointer"></i> إجمالي النقرات
+                    </div>
                 </div>
             </div>
 
             <!-- History Section -->
-            <div class="links-history">
+            <div class="history-section">
                 <div class="history-header">
                     <h5 class="history-title">
                         <i class="fas fa-history"></i> سجل الروابط
                     </h5>
-                    <button class="clear-history-btn" onclick="clearHistory()">
-                        <i class="fas fa-trash"></i> مسح الكل
-                    </button>
+                    <div class="history-actions">
+                        <button class="btn-custom btn-export" onclick="exportData()">
+                            <i class="fas fa-download"></i> تصدير
+                        </button>
+                        <button class="btn-custom btn-import" onclick="document.getElementById('importFile').click()">
+                            <i class="fas fa-upload"></i> استيراد
+                        </button>
+                        <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
+                        <button class="btn-custom btn-clear" onclick="clearHistory()">
+                            <i class="fas fa-trash"></i> مسح الكل
+                        </button>
+                    </div>
                 </div>
                 <div id="historyList" class="history-list">
                     <div class="empty-state">
                         <i class="fas fa-inbox"></i>
-                        <p>لا توجد روابط بعد</p>
+                        <h5>لا توجد روابط بعد</h5>
+                        <p>ابدأ باختصار أول رابط الآن</p>
                     </div>
                 </div>
             </div>
@@ -607,11 +831,11 @@
 
     <!-- About Modal -->
     <div class="modal fade" id="aboutModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="fas fa-info-circle"></i> حول البرنامج
+                        <i class="fas fa-info-circle"></i> حول البرنامج وخيارات الاستضافة
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
@@ -620,8 +844,8 @@
                         <div class="icon-wrapper mx-auto mb-3">
                             <i class="fas fa-compress-alt"></i>
                         </div>
-                        <h4>مختصر الروابط المحترف</h4>
-                        <p class="text-muted">الإصدار 2.0.0</p>
+                        <h4>مختصر الروابط الاحترافي</h4>
+                        <p class="text-muted">الإصدار 3.0.0 - محسن للعمل على جميع المنصات</p>
                     </div>
                     
                     <h6 class="mb-3">الخدمة مقدمة من:</h6>
@@ -629,23 +853,27 @@
                         <strong>هيثم محمد عطية</strong>
                     </div>
 
-                    <h6 class="mb-3 mt-4">المميزات:</h6>
+                    <h6 class="mb-3 mt-4">المميزات الرئيسية:</h6>
                     <ul class="feature-list">
                         <li>
                             <i class="fas fa-check-circle"></i>
-                            <span>اختصار الروابط الطويلة إلى روابط قصيرة</span>
+                            <span>روابط قصيرة احترافية تعمل مباشرة</span>
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
-                            <span>حفظ الروابط بشكل دائم بدون انتهاء صلاحية</span>
+                            <span>متاح مدى الحياة بدون انتهاء صلاحية</span>
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
-                            <span>تخزين محلي في المتصفح (لا يحتاج إنترنت)</span>
+                            <span>غير محدود لعدد الروابط</span>
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
-                            <span>روابط قابلة للمشاركة والعمل من أي جهاز</span>
+                            <span>بدون إعلانات وتحويل مباشر</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>إحصائيات مفصلة وتتبع النقرات</span>
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
@@ -653,27 +881,57 @@
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
-                            <span>إحصائيات مفصلة للروابط والنقرات</span>
+                            <span>رمز QR لكل رابط</span>
                         </li>
                     </ul>
 
-                    <div class="alert alert-info mt-4">
+                    <h6 class="mb-3 mt-4">أفضل خيارات الاستضافة المجانية:</h6>
+                    <div class="hosting-options">
+                        <div class="hosting-card recommended">
+                            <div class="hosting-name">
+                                <i class="fas fa-star text-warning"></i> Netlify (موصى به)
+                            </div>
+                            <div class="hosting-url">yourname.netlify.app</div>
+                            <small class="text-success">الأسرع + بدون إعلانات</small>
+                        </div>
+                        <div class="hosting-card">
+                            <div class="hosting-name">Vercel</div>
+                            <div class="hosting-url">yourname.vercel.app</div>
+                            <small class="text-muted">سريع جداً وموثوق</small>
+                        </div>
+                        <div class="hosting-card">
+                            <div class="hosting-name">GitHub Pages</div>
+                            <div class="hosting-url">yourname.github.io</div>
+                            <small class="text-muted">مجاني ومستقر</small>
+                        </div>
+                        <div class="hosting-card">
+                            <div class="hosting-name">Cloudflare Pages</div>
+                            <div class="hosting-url">yourname.pages.dev</div>
+                            <small class="text-muted">سريع عالمياً</small>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success mt-4">
+                        <h6><i class="fas fa-lightbulb"></i> كيفية النشر على Netlify (الأفضل):</h6>
+                        <ol class="mb-0 mt-2">
+                            <li>احفظ هذا الملف باسم <code>index.html</code></li>
+                            <li>اذهب إلى <a href="https://netlify.com" target="_blank">netlify.com</a> وسجل حساب مجاني</li>
+                            <li>اضغط على "Add new site" واختر "Deploy manually"</li>
+                            <li>اسحب ملف <code>index.html</code> وأفلته</li>
+                            <li>سيتم نشر موقعك خلال دقائق!</li>
+                            <li>يمكنك ربط نطاق خاص مجاناً</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
                         <h6><i class="fas fa-shield-alt"></i> معلومات الحماية والخصوصية:</h6>
                         <ul class="mb-0 mt-2">
-                            <li>جميع البيانات محفوظة محلياً في متصفحك فقط</li>
+                            <li>جميع البيانات محفوظة محلياً في متصفح المستخدم</li>
                             <li>لا يتم إرسال أي بيانات إلى خوادم خارجية</li>
                             <li>يمكنك تصدير البيانات وحفظها كنسخة احتياطية</li>
                             <li>البرنامج يعمل بشكل كامل بدون اتصال بالإنترنت</li>
                             <li>الروابط المختصرة تعمل حتى بعد إغلاق المتصفح</li>
                         </ul>
-                    </div>
-
-                    <div class="alert alert-warning mt-3">
-                        <h6><i class="fas fa-lightbulb"></i> نصيحة هامة:</h6>
-                        <p class="mb-0">
-                             الروابط المختصرة متاحة للجميع.
-                            الروابط ستعمل من أي جهاز يفتح نفس الصفحة.
-                        </p>
                     </div>
 
                     <div class="text-center mt-4">
@@ -689,12 +947,37 @@
         </div>
     </div>
 
+    <!-- QR Code Modal -->
+    <div class="modal fade" id="qrModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-qrcode"></i> رمز QR
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body qr-modal">
+                    <p>امسح هذا الرمز للوصول إلى الرابط المختصر</p>
+                    <div class="qr-code" id="qrCode">
+                        <!-- QR code will be generated here -->
+                    </div>
+                    <button class="btn btn-primary" onclick="downloadQR()">
+                        <i class="fas fa-download"></i> تحميل رمز QR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
         // Initialize the app
         let urlDatabase = [];
         let aboutModal;
-        let redirectTimeout;
+        let qrModal;
+        let currentQRCode = null;
 
         document.addEventListener('DOMContentLoaded', function() {
             // Load data from localStorage
@@ -702,8 +985,9 @@
             updateStatistics();
             renderHistory();
             
-            // Initialize modal
+            // Initialize modals
             aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'));
+            qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
             
             // Check for redirect on page load
             checkForRedirect();
@@ -719,7 +1003,6 @@
         }
 
         function getCurrentBaseUrl() {
-            // Get the current page URL without any parameters or hash
             const url = new URL(window.location.href);
             return `${url.protocol}//${url.host}${url.pathname}`;
         }
@@ -729,7 +1012,7 @@
             const longUrl = urlInput.value.trim();
             
             if (!longUrl) {
-                showNotification('الرجاء إدخال رابط صحيح', 'warning');
+                showToast('الرجاء إدخال رابط صحيح', 'warning');
                 return;
             }
 
@@ -737,7 +1020,7 @@
             try {
                 new URL(longUrl);
             } catch (e) {
-                showNotification('الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://', 'warning');
+                showToast('الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://', 'warning');
                 return;
             }
 
@@ -775,7 +1058,7 @@
                 btn.classList.remove('loading');
                 urlInput.value = '';
                 
-                showNotification('تم اختصار الرابط بنجاح!', 'success');
+                showToast('تم اختصار الرابط بنجاح!', 'success');
             }, 500);
         }
 
@@ -787,21 +1070,27 @@
             
             // Store current short URL for copying and sharing
             window.currentShortUrl = urlEntry.shortUrl;
+            
+            // Scroll to result
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        function copyToClipboard() {
-            const shortUrl = window.currentShortUrl;
+        function copyToClipboard(text = null) {
+            const shortUrl = text || window.currentShortUrl;
             if (!shortUrl) return;
 
             navigator.clipboard.writeText(shortUrl).then(() => {
-                const copyBtn = document.querySelector('.copy-btn');
-                copyBtn.classList.add('copied');
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
-                
-                setTimeout(() => {
-                    copyBtn.classList.remove('copied');
-                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
-                }, 2000);
+                if (!text) {
+                    const copyBtn = document.querySelector('.copy-btn');
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                    
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
+                    }, 2000);
+                }
+                showToast('تم نسخ الرابط!', 'success');
             });
         }
 
@@ -816,9 +1105,40 @@
                     url: shortUrl
                 }).catch(() => {});
             } else {
-                // Fallback: copy to clipboard
                 copyToClipboard();
-                showNotification('تم نسخ الرابط للمشاركة', 'info');
+                showToast('تم نسخ الرابط للمشاركة', 'info');
+            }
+        }
+
+        function showQRCode() {
+            const shortUrl = window.currentShortUrl;
+            if (!shortUrl) return;
+
+            // Clear previous QR code
+            const qrContainer = document.getElementById('qrCode');
+            qrContainer.innerHTML = '';
+
+            // Generate new QR code
+            currentQRCode = new QRCode(qrContainer, {
+                text: shortUrl,
+                width: 200,
+                height: 200,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            qrModal.show();
+        }
+
+        function downloadQR() {
+            const canvas = document.querySelector('#qrCode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'qrcode.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                showToast('تم تحميل رمز QR', 'success');
             }
         }
 
@@ -830,32 +1150,19 @@
                 const urlEntry = urlDatabase.find(url => url.shortCode === shortCode);
                 
                 if (urlEntry) {
-                    // Show redirect overlay
-                    const overlay = document.getElementById('redirectOverlay');
-                    overlay.classList.add('show');
-                    
                     // Increment clicks
                     urlEntry.clicks++;
                     saveDataToStorage();
                     updateStatistics();
                     
-                    // Redirect after 3 seconds
-                    redirectTimeout = setTimeout(() => {
-                        window.location.href = urlEntry.originalUrl;
-                    }, 3000);
+                    // Direct redirect without delay
+                    window.location.replace(urlEntry.originalUrl);
                 } else {
-                    showNotification('الرابط المختصر غير موجود', 'danger');
+                    showToast('الرابط المختصر غير موجود', 'danger');
                     // Clean the URL
                     window.history.replaceState({}, document.title, getCurrentBaseUrl());
                 }
             }
-        }
-
-        function cancelRedirect() {
-            clearTimeout(redirectTimeout);
-            document.getElementById('redirectOverlay').classList.remove('show');
-            // Clean the URL
-            window.history.replaceState({}, document.title, getCurrentBaseUrl());
         }
 
         function renderHistory() {
@@ -865,7 +1172,8 @@
                 historyList.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-inbox"></i>
-                        <p>لا توجد روابط بعد</p>
+                        <h5>لا توجد روابط بعد</h5>
+                        <p>ابدأ باختصار أول رابط الآن</p>
                     </div>
                 `;
                 return;
@@ -875,14 +1183,23 @@
                 <div class="history-item">
                     <div class="history-item-header">
                         <div class="short-url">${url.shortUrl}</div>
-                        <button class="delete-btn" onclick="deleteUrl(${url.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        <div class="history-actions-item">
+                            <button class="action-btn copy-history-btn" onclick="copyToClipboard('${url.shortUrl}')" title="نسخ">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteUrl(${url.id})" title="حذف">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="original-url">${url.originalUrl}</div>
-                    <div class="history-date">
-                        <i class="fas fa-clock"></i> ${formatDate(url.createdAt)} | 
-                        <i class="fas fa-mouse-pointer"></i> ${url.clicks} نقرة
+                    <div class="history-meta">
+                        <div class="history-date">
+                            <i class="fas fa-clock"></i> ${formatDate(url.createdAt)}
+                        </div>
+                        <div class="clicks-count">
+                            <i class="fas fa-mouse-pointer"></i> ${url.clicks} نقرة
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -894,7 +1211,7 @@
                 saveDataToStorage();
                 updateStatistics();
                 renderHistory();
-                showNotification('تم حذف الرابط بنجاح', 'info');
+                showToast('تم حذف الرابط بنجاح', 'info');
             }
         }
 
@@ -905,7 +1222,7 @@
                 updateStatistics();
                 renderHistory();
                 document.getElementById('resultSection').classList.remove('show');
-                showNotification('تم مسح السجل بنجاح', 'info');
+                showToast('تم مسح السجل بنجاح', 'info');
             }
         }
 
@@ -925,13 +1242,21 @@
         }
 
         function saveDataToStorage() {
-            localStorage.setItem('urlShortenerData', JSON.stringify(urlDatabase));
+            try {
+                localStorage.setItem('urlShortenerData', JSON.stringify(urlDatabase));
+            } catch (e) {
+                showToast('مساحة التخزين ممتلئة، يرجى حذف بعض الروابط', 'warning');
+            }
         }
 
         function loadDataFromStorage() {
             const stored = localStorage.getItem('urlShortenerData');
             if (stored) {
-                urlDatabase = JSON.parse(stored);
+                try {
+                    urlDatabase = JSON.parse(stored);
+                } catch (e) {
+                    urlDatabase = [];
+                }
             }
         }
 
@@ -946,7 +1271,7 @@
             linkElement.setAttribute('download', exportFileDefaultName);
             linkElement.click();
             
-            showNotification('تم تصدير البيانات بنجاح', 'success');
+            showToast('تم تصدير البيانات بنجاح', 'success');
         }
 
         function importData(event) {
@@ -966,12 +1291,12 @@
                         saveDataToStorage();
                         updateStatistics();
                         renderHistory();
-                        showNotification(`تم استيراد ${newUrls.length} رابط جديد`, 'success');
+                        showToast(`تم استيراد ${newUrls.length} رابط جديد`, 'success');
                     } else {
-                        showNotification('ملف غير صالح', 'danger');
+                        showToast('ملف غير صالح', 'danger');
                     }
                 } catch (error) {
-                    showNotification('خطأ في قراءة الملف', 'danger');
+                    showToast('خطأ في قراءة الملف', 'danger');
                 }
             };
             reader.readAsText(file);
@@ -1006,30 +1331,34 @@
             }
         }
 
-        function showNotification(message, type) {
-            // Create toast notification
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            
+            const iconMap = {
+                success: 'fa-check-circle',
+                warning: 'fa-exclamation-triangle',
+                danger: 'fa-times-circle',
+                info: 'fa-info-circle'
+            };
+            
             const toastHtml = `
-                <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 9999; margin-top: 20px;">
-                    <div class="toast show align-items-center text-white bg-${type === 'success' ? 'success' : type === 'warning' ? 'warning' : type === 'danger' ? 'danger' : 'info'} border-0" role="alert">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                ${message}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                        </div>
-                    </div>
+                <div id="${toastId}" class="custom-toast toast-${type}">
+                    <i class="fas ${iconMap[type]} toast-icon"></i>
+                    <div class="toast-message">${message}</div>
                 </div>
             `;
             
-            const toastElement = document.createElement('div');
-            toastElement.innerHTML = toastHtml;
-            document.body.appendChild(toastElement);
+            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
             
+            const toast = document.getElementById(toastId);
             setTimeout(() => {
-                toastElement.remove();
+                toast.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
             }, 3000);
         }
     </script>
 </body>
 </html>
-
