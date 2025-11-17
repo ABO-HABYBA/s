@@ -1,0 +1,5 @@
+# إذا كان الطلب يحتوي على ?s=، مرره إلى الدالة
+/.netlify/functions/redirect 200
+
+# جميع الطلبات الأخرى، قدم لها ملف index.html
+/*    /index.html   200
