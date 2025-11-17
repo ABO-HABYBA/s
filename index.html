@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخدمة مقدمة من هيثم محمد عطية - مختصر الروابط</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* (تم نسخ نفس كود CSS الأصلي بالكامل هنا للاختصار) */
+        :root { --primary-color: #6366f1; --primary-dark: #4f46e5; --secondary-color: #06b6d4; --success-color: #10b981; --danger-color: #ef4444; --warning-color: #f59e0b; --dark-bg: #1e293b; --light-bg: #f8fafc; --text-dark: #1e293b; --text-light: #64748b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+        .navbar { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1); padding: 1rem 0; }
+        .navbar-brand { font-weight: bold; color: var(--primary-color) !important; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; }
+        .main-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .app-card { background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); padding: 3rem; max-width: 800px; width: 100%; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .app-header { text-align: center; margin-bottom: 2.5rem; }
+        .app-header h1 { color: var(--text-dark); font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .app-header p { color: var(--text-light); font-size: 1.1rem; }
+        .icon-wrapper { width: 90px; height: 90px; margin: 0 auto 2rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 25px; display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .icon-wrapper i { font-size: 2.8rem; color: white; }
+        .url-input-group { position: relative; margin-bottom: 1.5rem; }
+        .url-input { width: 100%; padding: 1.2rem 4rem 1.2rem 1.5rem; border: 2px solid #e2e8f0; border-radius: 15px; font-size: 1.1rem; transition: all 0.3s ease; background: var(--light-bg); }
+        .url-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); background: white; }
+        .input-icon { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: var(--text-light); font-size: 1.2rem; }
+        .shorten-btn { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; border: none; padding: 1.2rem 2.5rem; border-radius: 15px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3); }
+        .shorten-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4); }
+        .shorten-btn:active { transform: translateY(-1px); }
+        .result-section { margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border-radius: 15px; display: none; animation: fadeIn 0.5s ease; border: 2px solid var(--primary-color); }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .result-section.show { display: block; }
+        .result-item { background: white; padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #e2e8f0; transition: all 0.3s ease; }
+        .result-item:hover { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        .result-label { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.5rem; font-weight: 600; }
+        .result-value { font-size: 1rem; color: var(--text-dark); word-break: break-all; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .copy-btn, .share-btn, .qr-btn { color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; font-weight: 500; }
+        .copy-btn { background: var(--primary-color); } .copy-btn:hover { background: var(--primary-dark); } .copy-btn.copied { background: var(--success-color); }
+        .share-btn { background: var(--secondary-color); } .share-btn:hover { background: #0891b2; }
+        .qr-btn { background: var(--warning-color); } .qr-btn:hover { background: #d97706; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+        .stat-card { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4); }
+        .stat-value { font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .stat-label { font-size: 0.95rem; opacity: 0.95; }
+        .history-section { margin-top: 2.5rem; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .history-title { font-size: 1.4rem; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .history-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn-custom { padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; border: none; }
+        .btn-clear { background: var(--danger-color); color: white; } .btn-clear:hover { background: #dc2626; }
+        .history-list { max-height: 400px; overflow-y: auto; padding-right: 0.5rem; }
+        .history-list::-webkit-scrollbar { width: 8px; } .history-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; } .history-list::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+        .history-item { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #e2e8f0; transition: all 0.3s ease; position: relative; }
+        .history-item:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); transform: translateY(-2px); }
+        .history-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
+        .short-url { color: var(--primary-color); font-weight: 600; font-size: 1rem; flex: 1; word-break: break-all; }
+        .history-actions-item { display: flex; gap: 0.5rem; }
+        .action-btn { background: transparent; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 0.85rem; }
+        .copy-history-btn { color: var(--primary-color); } .copy-history-btn:hover { background: rgba(99, 102, 241, 0.1); }
+        .delete-btn { color: var(--danger-color); } .delete-btn:hover { background: rgba(239, 68, 68, 0.1); }
+        .original-url { color: var(--text-light); font-size: 0.9rem; word-break: break-all; margin-bottom: 0.5rem; line-height: 1.5; }
+        .history-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-light); }
+        .history-date { display: flex; align-items: center; gap: 0.3rem; }
+        .clicks-count { display: flex; align-items: center; gap: 0.3rem; color: var(--primary-color); font-weight: 600; }
+        .empty-state { text-align: center; padding: 3rem; color: var(--text-light); }
+        .empty-state i { font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.4; }
+        .empty-state h5 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .modal-content { border-radius: 20px; border: none; }
+        .modal-header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border-radius: 20px 20px 0 0; border: none; }
+        .modal-title { font-weight: 600; font-size: 1.3rem; }
+        .btn-close { filter: brightness(0) invert(1); }
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { padding: 1rem 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 1rem; }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list i { color: var(--success-color); font-size: 1.3rem; }
+        .hosting-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .hosting-card { padding: 1.5rem; border: 2px solid #e2e8f0; border-radius: 12px; text-align: center; transition: all 0.3s ease; }
+        .hosting-card:hover { border-color: var(--primary-color); box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2); }
+        .hosting-card.recommended { border-color: var(--success-color); background: rgba(16, 185, 129, 0.05); }
+        .hosting-name { font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .hosting-url { color: var(--primary-color); font-size: 0.9rem; word-break: break-all; }
+        .loading-spinner { display: none; width: 20px; height: 20px; border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .shorten-btn.loading .btn-text { display: none; }
+        .shorten-btn.loading .loading-spinner { display: inline-block; }
+        .qr-modal { text-align: center; }
+        .qr-code { margin: 1.5rem 0; padding: 1rem; background: white; border-radius: 12px; display: inline-block; }
+        .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
+        .custom-toast { background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); padding: 1rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; animation: slideInRight 0.3s ease; min-width: 300px; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+        .toast-icon { font-size: 1.5rem; }
+        .toast-success .toast-icon { color: var(--success-color); } .toast-warning .toast-icon { color: var(--warning-color); } .toast-danger .toast-icon { color: var(--danger-color); } .toast-info .toast-icon { color: var(--primary-color); }
+        @media (max-width: 768px) { .app-card { padding: 2rem; } .app-header h1 { font-size: 1.8rem; } .stats-grid { grid-template-columns: 1fr; } .history-header { flex-direction: column; align-items: stretch; } .history-actions { justify-content: center; } }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-link"></i>
+                مختصر الروابط - هيثم محمد عطية
+            </a>
+            <button class="btn btn-primary" onclick="showAbout()">
+                <i class="fas fa-info-circle"></i> حول البرنامج
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="app-card">
+            <div class="app-header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-compress-alt"></i>
+                </div>
+                <h1>مختصر الروابط الاحترافي</h1>
+                <p>روابط قصيرة وسريعة ومتاحة مدى الحياة</p>
+            </div>
+
+            <!-- URL Input Section -->
+            <div class="url-input-group">
+                <i class="fas fa-link input-icon"></i>
+                <input 
+                    type="url" 
+                    id="urlInput" 
+                    class="url-input" 
+                    placeholder="أدخل الرابط الطويل هنا..."
+                    onkeypress="handleKeyPress(event)"
+                >
+            </div>
+
+            <button class="shorten-btn" onclick="shortenUrl()">
+                <span class="btn-text">
+                    <i class="fas fa-magic"></i>
+                    اختصر الرابط الآن
+                </span>
+                <div class="loading-spinner"></div>
+            </button>
+
+            <!-- Result Section -->
+            <div id="resultSection" class="result-section">
+                <h5 class="mb-4 text-center">
+                    <i class="fas fa-check-circle text-success"></i>
+                    تم اختصار الرابط بنجاح!
+                </h5>
+                <div class="result-item">
+                    <div class="result-label">الرابط الأصلي:</div>
+                    <div class="result-value">
+                        <span id="originalUrl"></span>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">الرابط المختصر:</div>
+                    <div class="result-value">
+                        <span id="shortUrl"></span>
+                        <div>
+                            <button class="copy-btn" onclick="copyToClipboard()">
+                                <i class="fas fa-copy"></i> نسخ
+                            </button>
+                            <button class="share-btn" onclick="shareLink()">
+                                <i class="fas fa-share"></i> مشاركة
+                            </button>
+                            <button class="qr-btn" onclick="showQRCode()">
+                                <i class="fas fa-qrcode"></i> QR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalLinks">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-link"></i> إجمالي الروابط
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="todayLinks">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-calendar-day"></i> روابط اليوم
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalClicks">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-mouse-pointer"></i> إجمالي النقرات
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h5 class="history-title">
+                        <i class="fas fa-history"></i> سجل الروابط
+                    </h5>
+                    <div class="history-actions">
+                        <button class="btn-custom btn-clear" onclick="clearHistory()">
+                            <i class="fas fa-trash"></i> مسح الكل
+                        </button>
+                    </div>
+                </div>
+                <div id="historyList" class="history-list">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h5>لا توجد روابط بعد</h5>
+                        <p>ابدأ باختصار أول رابط الآن</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle"></i> حول البرنامج
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="icon-wrapper mx-auto mb-3">
+                            <i class="fas fa-compress-alt"></i>
+                        </div>
+                        <h4>مختصر الروابط الاحترافي</h4>
+                        <p class="text-muted">الإصدار 3.0.0 - مدعوم بقاعدة بيانات Firebase</p>
+                    </div>
+                    <div class="alert alert-primary text-center">
+                        <strong>الخدمة مقدمة من: هيثم محمد عطية</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div class="modal fade" id="qrModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-qrcode"></i> رمز QR
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body qr-modal">
+                    <p>امسح هذا الرمز للوصول إلى الرابط المختصر</p>
+                    <div class="qr-code" id="qrCode">
+                        <!-- QR code will be generated here -->
+                    </div>
+                    <button class="btn btn-primary" onclick="downloadQR()">
+                        <i class="fas fa-download"></i> تحميل رمز QR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- QR Code JS -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // === FIREBASE CONFIGURATION ===
+        // TODO: REPLACE WITH YOUR CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyBxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            authDomain: "your-project-id.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project-id.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        // ==============================
+
+        // === GLOBAL VARIABLES ===
+        let urlDatabase = []; // This will now be a local cache of Firestore data
+        let aboutModal;
+        let qrModal;
+        let currentShortUrl = null;
+        // ==========================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDataFromFirestore();
+            updateStatistics();
+            renderHistory();
+            
+            aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'));
+            qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
+            
+            checkForRedirect();
+        });
+
+        function generateShortCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function getCurrentBaseUrl() {
+            const url = new URL(window.location.href);
+            return `${url.protocol}//${url.host}${url.pathname}`;
+        }
+
+        // === CORE FUNCTIONS (MODIFIED FOR FIRESTORE) ===
+
+        async function shortenUrl() {
+            const urlInput = document.getElementById('urlInput');
+            const longUrl = urlInput.value.trim();
+            
+            if (!longUrl) {
+                showToast('الرجاء إدخال رابط صحيح', 'warning');
+                return;
+            }
+
+            try {
+                new URL(longUrl);
+            } catch (e) {
+                showToast('الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://', 'warning');
+                return;
+            }
+
+            const btn = document.querySelector('.shorten-btn');
+            btn.classList.add('loading');
+
+            let shortCode;
+            let shortUrl;
+            let isUnique = false;
+
+            // Loop until a unique short code is found
+            while (!isUnique) {
+                shortCode = generateShortCode();
+                const docRef = db.collection("shortLinks").where("shortCode", "==", shortCode);
+                const snapshot = await docRef.get();
+                if (snapshot.empty) {
+                    isUnique = true;
+                }
+            }
+            
+            const baseUrl = getCurrentBaseUrl();
+            shortUrl = `${baseUrl}?s=${shortCode}`;
+            
+            const urlEntry = {
+                shortCode: shortCode,
+                originalUrl: longUrl,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                clicks: 0
+            };
+
+            try {
+                await db.collection("shortLinks").add(urlEntry);
+                
+                // Add to local cache for immediate UI update
+                urlEntry.id = Date.now(); // temporary id for UI
+                urlDatabase.unshift(urlEntry);
+                
+                showResult({ shortUrl, originalUrl: longUrl });
+                updateStatistics();
+                renderHistory();
+                
+                btn.classList.remove('loading');
+                urlInput.value = '';
+                
+                showToast('تم اختصار الرابط بنجاح!', 'success');
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                showToast('حدث خطأ أثناء حفظ الرابط', 'danger');
+                btn.classList.remove('loading');
+            }
+        }
+
+        async function checkForRedirect() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const shortCode = urlParams.get('s');
+            
+            if (shortCode) {
+                try {
+                    const docRef = db.collection("shortLinks").where("shortCode", "==", shortCode);
+                    const snapshot = await docRef.get();
+                    
+                    if (!snapshot.empty) {
+                        const doc = snapshot.docs[0];
+                        const urlEntry = doc.data();
+                        
+                        // Increment clicks atomically
+                        await doc.ref.update({ clicks: firebase.firestore.FieldValue.increment(1) });
+                        
+                        // Redirect
+                        window.location.replace(urlEntry.originalUrl);
+                    } else {
+                        showToast('الرابط المختصر غير موجود', 'danger');
+                        window.history.replaceState({}, document.title, getCurrentBaseUrl());
+                    }
+                } catch (error) {
+                    console.error("Error checking for redirect: ", error);
+                    showToast('حدث خطأ ما', 'danger');
+                }
+            }
+        }
+
+        async function loadDataFromFirestore() {
+            try {
+                const snapshot = await db.collection("shortLinks").orderBy("createdAt", "desc").get();
+                urlDatabase = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                renderHistory();
+                updateStatistics();
+            } catch (error) {
+                console.error("Error loading data: ", error);
+            }
+        }
+        
+        async function deleteUrl(docId) {
+            if (confirm('هل أنت متأكد من حذف هذا الرابط؟')) {
+                try {
+                    await db.collection("shortLinks").doc(docId).delete();
+                    showToast('تم حذف الرابط بنجاح', 'info');
+                    loadDataFromFirestore(); // Reload data from Firestore
+                } catch (error) {
+                    console.error("Error deleting document: ", error);
+                    showToast('فشل حذف الرابط', 'danger');
+                }
+            }
+        }
+
+        async function clearHistory() {
+            if (confirm('هل أنت متأكد من مسح جميع الروابط؟ هذا الإجراء لا يمكن التراجع عنه.')) {
+                try {
+                    const snapshot = await db.collection("shortLinks").get();
+                    const batch = db.batch();
+                    snapshot.docs.forEach(doc => {
+                        batch.delete(doc.ref);
+                    });
+                    await batch.commit();
+                    showToast('تم مسح السجل بنجاح', 'info');
+                    loadDataFromFirestore(); // Reload data
+                } catch (error) {
+                    console.error("Error clearing history: ", error);
+                    showToast('فشل مسح السجل', 'danger');
+                }
+            }
+        }
+
+        // =============================================
+
+        // === UI HELPER FUNCTIONS (LARGELY UNCHANGED) ===
+        
+        function showResult(urlEntry) {
+            const resultSection = document.getElementById('resultSection');
+            document.getElementById('originalUrl').textContent = urlEntry.originalUrl;
+            document.getElementById('shortUrl').textContent = urlEntry.shortUrl;
+            resultSection.classList.add('show');
+            
+            currentShortUrl = urlEntry.shortUrl;
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyToClipboard(text = null) {
+            const shortUrl = text || currentShortUrl;
+            if (!shortUrl) return;
+
+            navigator.clipboard.writeText(shortUrl).then(() => {
+                if (!text) {
+                    const copyBtn = document.querySelector('.copy-btn');
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                    
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
+                    }, 2000);
+                }
+                showToast('تم نسخ الرابط!', 'success');
+            });
+        }
+
+        function shareLink() {
+            const shortUrl = currentShortUrl;
+            if (!shortUrl) return;
+
+            if (navigator.share) {
+                navigator.share({ title: 'رابط مختصر', text: 'تم مشاركة رابط مختصر', url: shortUrl }).catch(() => {});
+            } else {
+                copyToClipboard();
+                showToast('تم نسخ الرابط للمشاركة', 'info');
+            }
+        }
+
+        function showQRCode() {
+            const shortUrl = currentShortUrl;
+            if (!shortUrl) return;
+
+            const qrContainer = document.getElementById('qrCode');
+            qrContainer.innerHTML = '';
+            currentQRCode = new QRCode(qrContainer, { text: shortUrl, width: 200, height: 200, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
+            qrModal.show();
+        }
+
+        function downloadQR() {
+            const canvas = document.querySelector('#qrCode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'qrcode.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                showToast('تم تحميل رمز QR', 'success');
+            }
+        }
+
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            
+            if (urlDatabase.length === 0) {
+                historyList.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><h5>لا توجد روابط بعد</h5><p>ابدأ باختصار أول رابط الآن</p></div>`;
+                return;
+            }
+
+            historyList.innerHTML = urlDatabase.map(url => `
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="short-url">${getCurrentBaseUrl()}?s=${url.shortCode}</div>
+                        <div class="history-actions-item">
+                            <button class="action-btn copy-history-btn" onclick="copyToClipboard('${getCurrentBaseUrl()}?s=${url.shortCode}')" title="نسخ">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteUrl('${url.id}')" title="حذف">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="original-url">${url.originalUrl}</div>
+                    <div class="history-meta">
+                        <div class="history-date">
+                            <i class="fas fa-clock"></i> ${formatDate(url.createdAt)}
+                        </div>
+                        <div class="clicks-count">
+                            <i class="fas fa-mouse-pointer"></i> ${url.clicks || 0} نقرة
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStatistics() {
+            document.getElementById('totalLinks').textContent = urlDatabase.length;
+            
+            const today = new Date().toDateString();
+            const todayCount = urlDatabase.filter(url => 
+                url.createdAt && url.createdAt.toDate && url.createdAt.toDate().toDateString() === today
+            ).length;
+            document.getElementById('todayLinks').textContent = todayCount;
+            
+            const totalClicks = urlDatabase.reduce((sum, url) => sum + (url.clicks || 0), 0);
+            document.getElementById('totalClicks').textContent = totalClicks;
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return 'غير معروف';
+            const date = timestamp.toDate(); // Firestore Timestamp to JS Date
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'الآن';
+            if (minutes < 60) return `منذ ${minutes} دقيقة`;
+            if (hours < 24) return `منذ ${hours} ساعة`;
+            if (days < 7) return `منذ ${days} يوم`;
+            
+            return date.toLocaleDateString('ar-SA');
+        }
+
+        function showAbout() { aboutModal.show(); }
+        function handleKeyPress(event) { if (event.key === 'Enter') { shortenUrl(); } }
+
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            const iconMap = { success: 'fa-check-circle', warning: 'fa-exclamation-triangle', danger: 'fa-times-circle', info: 'fa-info-circle' };
+            const toastHtml = `<div id="${toastId}" class="custom-toast toast-${type}"><i class="fas ${iconMap[type]} toast-icon"></i><div class="toast-message">${message}</div></div>`;
+            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+            const toast = document.getElementById(toastId);
+            setTimeout(() => { toast.style.animation = 'slideInRight 0.3s ease reverse'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+    </script>
+</body>
+</html>
