@@ -1,0 +1,199 @@
+// ===============================
+//  VARIABLES
+// ===============================
+let urlDatabase = [];
+let aboutModal, qrModal;
+
+// ===============================
+//  TOAST FUNCTION
+// ===============================
+function showToast(message, type = "info") {
+    const toastBox = document.getElementById("toastBox");
+    const toast = document.createElement("div");
+
+    toast.className = `toast-message ${type}`;
+    toast.innerText = message;
+
+    toastBox.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add("hide");
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
+}
+
+// ===============================
+//  SHORTEN URL USING is.gd API
+// ===============================
+async function shortenUrl() {
+    const urlInput = document.getElementById('urlInput');
+    const longUrl = urlInput.value.trim();
+
+    if (!longUrl) {
+        showToast('الرجاء إدخال رابط صحيح', 'warning');
+        return;
+    }
+
+    try {
+        new URL(longUrl);
+    } catch (e) {
+        showToast('الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://', 'warning');
+        return;
+    }
+
+    const btn = document.querySelector('.shorten-btn');
+    btn.classList.add('loading');
+
+    try {
+        const apiUrl = `https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`;
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            throw new Error("فشل في الاتصال بخدمة is.gd");
+        }
+
+        const shortUrl = await response.text();
+
+        showResult({
+            originalUrl: longUrl,
+            shortUrl: shortUrl
+        });
+
+        saveToLocalHistory(longUrl, shortUrl);
+        renderHistory();
+        updateStatistics();
+
+        btn.classList.remove('loading');
+        urlInput.value = '';
+
+        showToast('تم اختصار الرابط بنجاح!', 'success');
+
+    } catch (error) {
+        console.error(error);
+        showToast('حدث خطأ أثناء الاتصال بخدمة is.gd', 'danger');
+        btn.classList.remove('loading');
+    }
+}
+
+// ===============================
+//  SHOW RESULT
+// ===============================
+function showResult({ originalUrl, shortUrl }) {
+    const resultBox = document.querySelector('.result-box');
+    resultBox.classList.remove('hidden');
+
+    document.getElementById("shortUrl").value = shortUrl;
+    document.getElementById("originalUrl").innerText = originalUrl;
+}
+
+// ===============================
+//  COPY SHORT URL
+// ===============================
+function copyShortUrl() {
+    const shortUrlInput = document.getElementById("shortUrl");
+    shortUrlInput.select();
+    document.execCommand("copy");
+
+    showToast("تم نسخ الرابط", "success");
+}
+
+// ===============================
+//  QR CODE GENERATION
+// ===============================
+function showQrCode() {
+    const qrImage = document.getElementById("qrCodeImage");
+    const url = document.getElementById("shortUrl").value;
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+
+    qrModal.show();
+}
+
+// ===============================
+//  LOCAL STORAGE FUNCTIONS
+// ===============================
+function saveToLocalHistory(original, short) {
+    const record = {
+        id: Date.now(),
+        originalUrl: original,
+        shortUrl: short,
+        clicks: 0,
+        createdAt: new Date().toISOString()
+    };
+
+    let history = JSON.parse(localStorage.getItem("shortHistory") || "[]");
+    history.unshift(record);
+    localStorage.setItem("shortHistory", JSON.stringify(history));
+}
+
+function loadDataFromLocal() {
+    urlDatabase = JSON.parse(localStorage.getItem("shortHistory") || "[]");
+}
+
+function clearHistory() {
+    if (confirm("هل أنت متأكد من مسح السجل؟")) {
+        localStorage.removeItem("shortHistory");
+        urlDatabase = [];
+        renderHistory();
+        updateStatistics();
+        showToast("تم مسح السجل", "info");
+    }
+}
+
+function deleteUrl(id) {
+    let history = JSON.parse(localStorage.getItem("shortHistory") || "[]");
+    history = history.filter(item => item.id !== id);
+    localStorage.setItem("shortHistory", JSON.stringify(history));
+    urlDatabase = history;
+    renderHistory();
+    showToast("تم حذف الرابط", "info");
+}
+
+// ===============================
+//  RENDER HISTORY
+// ===============================
+function renderHistory() {
+    const container = document.getElementById("historyList");
+    container.innerHTML = "";
+
+    urlDatabase.forEach(record => {
+        const div = document.createElement("div");
+        div.className = "history-item";
+
+        div.innerHTML = `
+            <div class="left">
+                <a href="${record.shortUrl}" target="_blank">${record.shortUrl}</a>
+                <div class="orig">${record.originalUrl}</div>
+            </div>
+            <div class="right">
+                <button onclick="copyFromHistory('${record.shortUrl}')">نسخ</button>
+                <button onclick="deleteUrl(${record.id})" class="danger">حذف</button>
+            </div>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+function copyFromHistory(url) {
+    navigator.clipboard.writeText(url);
+    showToast("تم النسخ!", "success");
+}
+
+// ===============================
+//  STATISTICS
+// ===============================
+function updateStatistics() {
+    document.getElementById("statTotal").innerText = urlDatabase.length;
+}
+
+// ===============================
+// INIT
+// ===============================
+document.addEventListener('DOMContentLoaded', function () {
+    loadDataFromLocal();
+    renderHistory();
+    updateStatistics();
+
+    aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'));
+    qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
+});
