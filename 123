@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>URL Shortener</title>
+</head>
+<body>
+<input type="text" id="long" placeholder="ضع الرابط الطويل" style="width:300px">
+<button onclick="shorten()">اختصار</button>
+<p id="out"></p>
+
+<script>
+function shorten() {
+    let long = document.getElementById("long").value;
+    fetch("https://tinyurl.com/api-create.php?url=" + long)
+    .then(r => r.text())
+    .then(short => document.getElementById("out").innerHTML = short);
+}
+</script>
+</body>
+</html>
