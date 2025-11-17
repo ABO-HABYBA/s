@@ -1,199 +1,583 @@
-// ===============================
-//  VARIABLES
-// ===============================
-let urlDatabase = [];
-let aboutModal, qrModal;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مختصر الروابط - بواسطة هيثم محمد عطية </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { --primary-color: #6366f1; --primary-dark: #4f46e5; --secondary-color: #06b6d4; --success-color: #10b981; --danger-color: #ef4444; --warning-color: #f59e0b; --dark-bg: #1e293b; --light-bg: #f8fafc; --text-dark: #1e293b; --text-light: #64748b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+        .navbar { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1); padding: 1rem 0; }
+        .navbar-brand { font-weight: bold; color: var(--primary-color) !important; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem; }
+        .main-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .app-card { background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); padding: 3rem; max-width: 800px; width: 100%; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .app-header { text-align: center; margin-bottom: 2.5rem; }
+        .app-header h1 { color: var(--text-dark); font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .app-header p { color: var(--text-light); font-size: 1.1rem; }
+        .icon-wrapper { width: 90px; height: 90px; margin: 0 auto 2rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 25px; display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .icon-wrapper i { font-size: 2.8rem; color: white; }
+        .url-input-group { position: relative; margin-bottom: 1.5rem; }
+        .url-input { width: 100%; padding: 1.2rem 4rem 1.2rem 1.5rem; border: 2px solid #e2e8f0; border-radius: 15px; font-size: 1.1rem; transition: all 0.3s ease; background: var(--light-bg); }
+        .url-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); background: white; }
+        .input-icon { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: var(--text-light); font-size: 1.2rem; }
+        .shorten-btn { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; border: none; padding: 1.2rem 2.5rem; border-radius: 15px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3); }
+        .shorten-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4); }
+        .shorten-btn:active { transform: translateY(-1px); }
+        .result-section { margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border-radius: 15px; display: none; animation: fadeIn 0.5s ease; border: 2px solid var(--primary-color); }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .result-section.show { display: block; }
+        .result-item { background: white; padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #e2e8f0; transition: all 0.3s ease; }
+        .result-item:hover { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        .result-label { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.5rem; font-weight: 600; }
+        .result-value { font-size: 1rem; color: var(--text-dark); word-break: break-all; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .copy-btn, .share-btn, .qr-btn { color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; font-weight: 500; }
+        .copy-btn { background: var(--primary-color); } .copy-btn:hover { background: var(--primary-dark); } .copy-btn.copied { background: var(--success-color); }
+        .share-btn { background: var(--secondary-color); } .share-btn:hover { background: #0891b2; }
+        .qr-btn { background: var(--warning-color); } .qr-btn:hover { background: #d97706; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+        .stat-card { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 2rem; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4); }
+        .stat-value { font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .stat-label { font-size: 0.95rem; opacity: 0.95; }
+        .history-section { margin-top: 2.5rem; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .history-title { font-size: 1.4rem; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .history-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn-custom { padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; border: none; }
+        .btn-export { background: var(--success-color); color: white; } .btn-export:hover { background: #059669; }
+        .btn-import { background: var(--primary-color); color: white; } .btn-import:hover { background: var(--primary-dark); }
+        .btn-clear { background: var(--danger-color); color: white; } .btn-clear:hover { background: #dc2626; }
+        .history-list { max-height: 400px; overflow-y: auto; padding-right: 0.5rem; }
+        .history-list::-webkit-scrollbar { width: 8px; } .history-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; } .history-list::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+        .history-item { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid #e2e8f0; transition: all 0.3s ease; position: relative; }
+        .history-item:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); transform: translateY(-2px); }
+        .history-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
+        .short-url { color: var(--primary-color); font-weight: 600; font-size: 1rem; flex: 1; word-break: break-all; }
+        .history-actions-item { display: flex; gap: 0.5rem; }
+        .action-btn { background: transparent; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 0.85rem; }
+        .copy-history-btn { color: var(--primary-color); } .copy-history-btn:hover { background: rgba(99, 102, 241, 0.1); }
+        .delete-btn { color: var(--danger-color); } .delete-btn:hover { background: rgba(239, 68, 68, 0.1); }
+        .original-url { color: var(--text-light); font-size: 0.9rem; word-break: break-all; margin-bottom: 0.5rem; line-height: 1.5; }
+        .history-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-light); }
+        .history-date { display: flex; align-items: center; gap: 0.3rem; }
+        .empty-state { text-align: center; padding: 3rem; color: var(--text-light); }
+        .empty-state i { font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.4; }
+        .empty-state h5 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .modal-content { border-radius: 20px; border: none; }
+        .modal-header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border-radius: 20px 20px 0 0; border: none; }
+        .modal-title { font-weight: 600; font-size: 1.3rem; }
+        .btn-close { filter: brightness(0) invert(1); }
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { padding: 1rem 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 1rem; }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list i { color: var(--success-color); font-size: 1.3rem; }
+        .loading-spinner { display: none; width: 20px; height: 20px; border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .shorten-btn.loading .btn-text { display: none; }
+        .shorten-btn.loading .loading-spinner { display: inline-block; }
+        .qr-modal { text-align: center; }
+        .qr-code { margin: 1.5rem 0; padding: 1rem; background: white; border-radius: 12px; display: inline-block; }
+        .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; }
+        .custom-toast { background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); padding: 1rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; animation: slideInRight 0.3s ease; min-width: 300px; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+        .toast-icon { font-size: 1.5rem; }
+        .toast-success .toast-icon { color: var(--success-color); } .toast-warning .toast-icon { color: var(--warning-color); } .toast-danger .toast-icon { color: var(--danger-color); } .toast-info .toast-icon { color: var(--primary-color); }
+        @media (max-width: 768px) { .app-card { padding: 2rem; } .app-header h1 { font-size: 1.8rem; } .stats-grid { grid-template-columns: 1fr; } .history-header { flex-direction: column; align-items: stretch; } .history-actions { justify-content: center; } }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
-// ===============================
-//  TOAST FUNCTION
-// ===============================
-function showToast(message, type = "info") {
-    const toastBox = document.getElementById("toastBox");
-    const toast = document.createElement("div");
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-link"></i>
+                مختصر الروابط - مدعوم بـ is.gd
+            </a>
+            <button class="btn btn-primary" onclick="showAbout()">
+                <i class="fas fa-info-circle"></i> حول البرنامج
+            </button>
+        </div>
+    </nav>
 
-    toast.className = `toast-message ${type}`;
-    toast.innerText = message;
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="app-card">
+            <div class="app-header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-compress-alt"></i>
+                </div>
+                <h1>مختصر الروابط السريع</h1>
+                <p>يستخدم خدمة is.gd لإنشاء روابط قصيرة وموثوقة</p>
+            </div>
 
-    toastBox.appendChild(toast);
+            <!-- URL Input Section -->
+            <div class="url-input-group">
+                <i class="fas fa-link input-icon"></i>
+                <input 
+                    type="url" 
+                    id="urlInput" 
+                    class="url-input" 
+                    placeholder="أدخل الرابط الطويل هنا..."
+                    onkeypress="handleKeyPress(event)"
+                >
+            </div>
 
-    setTimeout(() => {
-        toast.classList.add("hide");
-        setTimeout(() => toast.remove(), 300);
-    }, 2500);
-}
+            <button class="shorten-btn" onclick="shortenUrl()">
+                <span class="btn-text">
+                    <i class="fas fa-magic"></i>
+                    اختصر الرابط الآن
+                </span>
+                <div class="loading-spinner"></div>
+            </button>
 
-// ===============================
-//  SHORTEN URL USING is.gd API
-// ===============================
-async function shortenUrl() {
-    const urlInput = document.getElementById('urlInput');
-    const longUrl = urlInput.value.trim();
+            <!-- Result Section -->
+            <div id="resultSection" class="result-section">
+                <h5 class="mb-4 text-center">
+                    <i class="fas fa-check-circle text-success"></i>
+                    تم اختصار الرابط بنجاح!
+                </h5>
+                <div class="result-item">
+                    <div class="result-label">الرابط الأصلي:</div>
+                    <div class="result-value">
+                        <span id="originalUrl"></span>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">الرابط المختصر:</div>
+                    <div class="result-value">
+                        <span id="shortUrl"></span>
+                        <div>
+                            <button class="copy-btn" onclick="copyToClipboard()">
+                                <i class="fas fa-copy"></i> نسخ
+                            </button>
+                            <button class="share-btn" onclick="shareLink()">
+                                <i class="fas fa-share"></i> مشاركة
+                            </button>
+                            <button class="qr-btn" onclick="showQRCode()">
+                                <i class="fas fa-qrcode"></i> QR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    if (!longUrl) {
-        showToast('الرجاء إدخال رابط صحيح', 'warning');
-        return;
-    }
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalLinks">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-link"></i> إجمالي الروابط
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="todayLinks">0</div>
+                    <div class="stat-label">
+                        <i class="fas fa-calendar-day"></i> روابط اليوم
+                    </div>
+                </div>
+            </div>
 
-    try {
-        new URL(longUrl);
-    } catch (e) {
-        showToast('الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://', 'warning');
-        return;
-    }
+            <!-- History Section -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h5 class="history-title">
+                        <i class="fas fa-history"></i> سجل الروابط
+                    </h5>
+                    <div class="history-actions">
+                        <button class="btn-custom btn-export" onclick="exportData()">
+                            <i class="fas fa-download"></i> تصدير
+                        </button>
+                        <button class="btn-custom btn-import" onclick="document.getElementById('importFile').click()">
+                            <i class="fas fa-upload"></i> استيراد
+                        </button>
+                        <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
+                        <button class="btn-custom btn-clear" onclick="clearHistory()">
+                            <i class="fas fa-trash"></i> مسح الكل
+                        </button>
+                    </div>
+                </div>
+                <div id="historyList" class="history-list">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h5>لا توجد روابط بعد</h5>
+                        <p>ابدأ باختصار أول رابط الآن</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    const btn = document.querySelector('.shorten-btn');
-    btn.classList.add('loading');
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle"></i> حول البرنامج
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="icon-wrapper mx-auto mb-3">
+                            <i class="fas fa-compress-alt"></i>
+                        </div>
+                        <h4>مختصر الروابط السريع</h4>
+                        <p class="text-muted">الإصدار 4.0.0 - يعتمد على واجهة is.gd</p>
+                    </div>
+                    <div class="alert alert-primary text-center">
+                        <strong>الخدمة مقدمة من: هيثم محمد عطية</strong>
+                    </div>
+                    <h6 class="mb-3">كيف يعمل؟</h6>
+                    <p>هذا التطبيق هو واجهة أمامية لخدمة <a href="https://is.gd" target="_blank">is.gd</a> الشهيرة. عند إنشاء رابط مختصر، يتم إرسال طلب إلى is.gd وهم يقومون بإنشاء الرابط وإعادته لك. الروابط التي يتم إنشاؤها تعمل بشكل فوري وعالمي.</p>
+                    <h6 class="mb-3 mt-4">المميزات الرئيسية:</h6>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i><span>روابط قصيرة من خدمة is.gd الموثوقة</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>سجل محلي لحفظ الروابط التي قمت بإنشائها</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>تصدير واستيراد السجل</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>تصميم عصري وسريع الاستجابة</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>يعمل بدون أي إعدادات خادم معقدة</span></li>
+                    </ul>
+                    <div class="alert alert-info mt-4">
+                        <h6><i class="fas fa-shield-alt"></i> معلومات الخصوصية:</h6>
+                        <ul class="mb-0 mt-2">
+                            <li>سجل الروابط محفوظة محلياً في متصفحك فقط.</li>
+                            <li>لا يتم إرسال أي بيانات إلى خوادمنا.</li>
+                            <li>عملية اختصار الرابط تتم عبر الاتصال المباشر بخوادم is.gd.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    try {
-        const apiUrl = `https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`;
-        const response = await fetch(apiUrl);
+    <!-- QR Code Modal -->
+    <div class="modal fade" id="qrModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-qrcode"></i> رمز QR
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body qr-modal">
+                    <p>امسح هذا الرمز للوصول إلى الرابط المختصر</p>
+                    <div class="qr-code" id="qrCode"></div>
+                    <button class="btn btn-primary" onclick="downloadQR()">
+                        <i class="fas fa-download"></i> تحميل رمز QR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        if (!response.ok) {
-            throw new Error("فشل في الاتصال بخدمة is.gd");
-        }
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- QR Code JS -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
-        const shortUrl = await response.text();
+    <script>
+        // === GLOBAL VARIABLES ===
+        let urlDatabase = []; // This is now a local cache only
+        let aboutModal;
+        let qrModal;
+        let currentShortUrl = null;
+        // ==========================
 
-        showResult({
-            originalUrl: longUrl,
-            shortUrl: shortUrl
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDataFromStorage();
+            updateStatistics();
+            renderHistory();
+            
+            aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'));
+            qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
         });
 
-        saveToLocalHistory(longUrl, shortUrl);
-        renderHistory();
-        updateStatistics();
+        // === CORE FUNCTIONS (MODIFIED FOR is.gd API) ===
 
-        btn.classList.remove('loading');
-        urlInput.value = '';
+        async function shortenUrl() {
+            const urlInput = document.getElementById('urlInput');
+            const longUrl = urlInput.value.trim();
+            
+            if (!longUrl) {
+                showToast('الرجاء إدخال رابط صحيح', 'warning');
+                return;
+            }
 
-        showToast('تم اختصار الرابط بنجاح!', 'success');
+            try {
+                new URL(longUrl);
+            } catch (e) {
+                showToast('الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://', 'warning');
+                return;
+            }
 
-    } catch (error) {
-        console.error(error);
-        showToast('حدث خطأ أثناء الاتصال بخدمة is.gd', 'danger');
-        btn.classList.remove('loading');
-    }
-}
+            const btn = document.querySelector('.shorten-btn');
+            btn.classList.add('loading');
 
-// ===============================
-//  SHOW RESULT
-// ===============================
-function showResult({ originalUrl, shortUrl }) {
-    const resultBox = document.querySelector('.result-box');
-    resultBox.classList.remove('hidden');
+            try {
+                const apiUrl = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`;
+                const response = await fetch(apiUrl);
+                const data = await response.json();
 
-    document.getElementById("shortUrl").value = shortUrl;
-    document.getElementById("originalUrl").innerText = originalUrl;
-}
+                if (data.errorcode) {
+                    throw new Error(data.errormessage || 'فشل إنشاء الرابط المختصر');
+                }
 
-// ===============================
-//  COPY SHORT URL
-// ===============================
-function copyShortUrl() {
-    const shortUrlInput = document.getElementById("shortUrl");
-    shortUrlInput.select();
-    document.execCommand("copy");
+                const urlEntry = {
+                    id: Date.now(),
+                    shortUrl: data.shorturl,
+                    originalUrl: longUrl,
+                    createdAt: new Date().toISOString()
+                };
 
-    showToast("تم نسخ الرابط", "success");
-}
+                // Add to local cache for immediate UI update
+                urlDatabase.unshift(urlEntry);
+                saveDataToStorage();
+                
+                showResult(urlEntry);
+                updateStatistics();
+                renderHistory();
+                
+                btn.classList.remove('loading');
+                urlInput.value = '';
+                
+                showToast('تم اختصار الرابط بنجاح!', 'success');
 
-// ===============================
-//  QR CODE GENERATION
-// ===============================
-function showQrCode() {
-    const qrImage = document.getElementById("qrCodeImage");
-    const url = document.getElementById("shortUrl").value;
-    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+            } catch (error) {
+                console.error("Error shortening URL:", error);
+                showToast(`حدث خطأ: ${error.message}`, 'danger');
+                btn.classList.remove('loading');
+            }
+        }
 
-    qrModal.show();
-}
+        // =============================================
 
-// ===============================
-//  LOCAL STORAGE FUNCTIONS
-// ===============================
-function saveToLocalHistory(original, short) {
-    const record = {
-        id: Date.now(),
-        originalUrl: original,
-        shortUrl: short,
-        clicks: 0,
-        createdAt: new Date().toISOString()
-    };
+        // === LOCAL STORAGE FUNCTIONS (UNCHANGED) ===
+        
+        function saveDataToStorage() {
+            try {
+                localStorage.setItem('urlShortenerHistory', JSON.stringify(urlDatabase));
+            } catch (e) {
+                showToast('مساحة التخزين ممتلئة، يرجى حذف بعض الروابط', 'warning');
+            }
+        }
 
-    let history = JSON.parse(localStorage.getItem("shortHistory") || "[]");
-    history.unshift(record);
-    localStorage.setItem("shortHistory", JSON.stringify(history));
-}
+        function loadDataFromStorage() {
+            const stored = localStorage.getItem('urlShortenerHistory');
+            if (stored) {
+                try {
+                    urlDatabase = JSON.parse(stored);
+                } catch (e) {
+                    urlDatabase = [];
+                }
+            }
+        }
+        
+        // =============================================
 
-function loadDataFromLocal() {
-    urlDatabase = JSON.parse(localStorage.getItem("shortHistory") || "[]");
-}
+        // === UI HELPER FUNCTIONS (LARGELY UNCHANGED) ===
+        
+        function showResult(urlEntry) {
+            const resultSection = document.getElementById('resultSection');
+            document.getElementById('originalUrl').textContent = urlEntry.originalUrl;
+            document.getElementById('shortUrl').textContent = urlEntry.shortUrl;
+            resultSection.classList.add('show');
+            
+            currentShortUrl = urlEntry.shortUrl;
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
 
-function clearHistory() {
-    if (confirm("هل أنت متأكد من مسح السجل؟")) {
-        localStorage.removeItem("shortHistory");
-        urlDatabase = [];
-        renderHistory();
-        updateStatistics();
-        showToast("تم مسح السجل", "info");
-    }
-}
+        function copyToClipboard(text = null) {
+            const shortUrl = text || currentShortUrl;
+            if (!shortUrl) return;
 
-function deleteUrl(id) {
-    let history = JSON.parse(localStorage.getItem("shortHistory") || "[]");
-    history = history.filter(item => item.id !== id);
-    localStorage.setItem("shortHistory", JSON.stringify(history));
-    urlDatabase = history;
-    renderHistory();
-    showToast("تم حذف الرابط", "info");
-}
+            navigator.clipboard.writeText(shortUrl).then(() => {
+                if (!text) {
+                    const copyBtn = document.querySelector('.copy-btn');
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                    
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
+                    }, 2000);
+                }
+                showToast('تم نسخ الرابط!', 'success');
+            });
+        }
 
-// ===============================
-//  RENDER HISTORY
-// ===============================
-function renderHistory() {
-    const container = document.getElementById("historyList");
-    container.innerHTML = "";
+        function shareLink() {
+            const shortUrl = currentShortUrl;
+            if (!shortUrl) return;
 
-    urlDatabase.forEach(record => {
-        const div = document.createElement("div");
-        div.className = "history-item";
+            if (navigator.share) {
+                navigator.share({ title: 'رابط مختصر', text: 'تم مشاركة رابط مختصر', url: shortUrl }).catch(() => {});
+            } else {
+                copyToClipboard();
+                showToast('تم نسخ الرابط للمشاركة', 'info');
+            }
+        }
 
-        div.innerHTML = `
-            <div class="left">
-                <a href="${record.shortUrl}" target="_blank">${record.shortUrl}</a>
-                <div class="orig">${record.originalUrl}</div>
-            </div>
-            <div class="right">
-                <button onclick="copyFromHistory('${record.shortUrl}')">نسخ</button>
-                <button onclick="deleteUrl(${record.id})" class="danger">حذف</button>
-            </div>
-        `;
+        function showQRCode() {
+            const shortUrl = currentShortUrl;
+            if (!shortUrl) return;
 
-        container.appendChild(div);
-    });
-}
+            const qrContainer = document.getElementById('qrCode');
+            qrContainer.innerHTML = '';
+            currentQRCode = new QRCode(qrContainer, { text: shortUrl, width: 200, height: 200, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
+            qrModal.show();
+        }
 
-function copyFromHistory(url) {
-    navigator.clipboard.writeText(url);
-    showToast("تم النسخ!", "success");
-}
+        function downloadQR() {
+            const canvas = document.querySelector('#qrCode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'qrcode.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                showToast('تم تحميل رمز QR', 'success');
+            }
+        }
 
-// ===============================
-//  STATISTICS
-// ===============================
-function updateStatistics() {
-    document.getElementById("statTotal").innerText = urlDatabase.length;
-}
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            
+            if (urlDatabase.length === 0) {
+                historyList.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><h5>لا توجد روابط بعد</h5><p>ابدأ باختصار أول رابط الآن</p></div>`;
+                return;
+            }
 
-// ===============================
-// INIT
-// ===============================
-document.addEventListener('DOMContentLoaded', function () {
-    loadDataFromLocal();
-    renderHistory();
-    updateStatistics();
+            historyList.innerHTML = urlDatabase.map(url => `
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="short-url">${url.shortUrl}</div>
+                        <div class="history-actions-item">
+                            <button class="action-btn copy-history-btn" onclick="copyToClipboard('${url.shortUrl}')" title="نسخ">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteUrl(${url.id})" title="حذف">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="original-url">${url.originalUrl}</div>
+                    <div class="history-meta">
+                        <div class="history-date">
+                            <i class="fas fa-clock"></i> ${formatDate(url.createdAt)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-    aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'));
-    qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
-});
+        function deleteUrl(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الرابط من السجل؟')) {
+                urlDatabase = urlDatabase.filter(url => url.id !== id);
+                saveDataToStorage();
+                updateStatistics();
+                renderHistory();
+                showToast('تم حذف الرابط من السجل', 'info');
+            }
+        }
+
+        function clearHistory() {
+            if (confirm('هل أنت متأكد من مسح جميع الروابط من السجل؟')) {
+                urlDatabase = [];
+                saveDataToStorage();
+                updateStatistics();
+                renderHistory();
+                document.getElementById('resultSection').classList.remove('show');
+                showToast('تم مسح السجل بنجاح', 'info');
+            }
+        }
+
+        function updateStatistics() {
+            document.getElementById('totalLinks').textContent = urlDatabase.length;
+            
+            const today = new Date().toDateString();
+            const todayCount = urlDatabase.filter(url => 
+                new Date(url.createdAt).toDateString() === today
+            ).length;
+            document.getElementById('todayLinks').textContent = todayCount;
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(urlDatabase, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = `url-shortener-backup-${new Date().toISOString().split('T')[0]}.json`;
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            showToast('تم تصدير البيانات بنجاح', 'success');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData)) {
+                        urlDatabase = [...importedData, ...urlDatabase];
+                        saveDataToStorage();
+                        updateStatistics();
+                        renderHistory();
+                        showToast(`تم استيراد ${importedData.length} رابط`, 'success');
+                    } else {
+                        showToast('ملف غير صالح', 'danger');
+                    }
+                } catch (error) {
+                    showToast('خطأ في قراءة الملف', 'danger');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'الآن';
+            if (minutes < 60) return `منذ ${minutes} دقيقة`;
+            if (hours < 24) return `منذ ${hours} ساعة`;
+            if (days < 7) return `منذ ${days} يوم`;
+            
+            return date.toLocaleDateString('ar-SA');
+        }
+
+        function showAbout() { aboutModal.show(); }
+        function handleKeyPress(event) { if (event.key === 'Enter') { shortenUrl(); } }
+
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toastId = 'toast-' + Date.now();
+            const iconMap = { success: 'fa-check-circle', warning: 'fa-exclamation-triangle', danger: 'fa-times-circle', info: 'fa-info-circle' };
+            const toastHtml = `<div id="${toastId}" class="custom-toast toast-${type}"><i class="fas ${iconMap[type]} toast-icon"></i><div class="toast-message">${message}</div></div>`;
+            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+            const toast = document.getElementById(toastId);
+            setTimeout(() => { toast.style.animation = 'slideInRight 0.3s ease reverse'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+    </script>
+</body>
+</html>
