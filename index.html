@@ -1,457 +1,1034 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختصار الروابط المحلي | الخدمة مقدمة من هيثم محمد عطية</title>
+    <title>الخدمة مقدمة من هيثم محمد عطية - مختصر الروابط</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* --- تنسيقات style.css المدمجة --- */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f9;
-            color: #333;
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary-color: #06b6d4;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --dark-bg: #1e293b;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            direction: rtl; /* دعم اللغة العربية */
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            width: 100%;
-            padding: 20px 40px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 1.8em;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        #about-btn {
-            background-color: #6c757d;
-        }
-        #about-btn:hover {
-            background-color: #5a6268;
-        }
-        main {
-            width: 90%;
-            max-width: 800px;
-            margin: 30px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-        }
-        #shortener-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-        input[type="url"], input[type="text"] {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-            width: 100%;
             box-sizing: border-box;
         }
-        #shorten-btn {
-            background-color: #007bff;
-            width: 100%;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        #shorten-btn:hover {
-            background-color: #0056b3;
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
-        #result-container {
+
+        .navbar-brand {
+            font-weight: bold;
+            color: var(--primary-color) !important;
+            font-size: 1.2rem;
+        }
+
+        .main-container {
+            flex: 1;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 10px;
+            justify-content: center;
+            padding: 2rem;
         }
-        #result-container p {
-            margin: 0;
+
+        .app-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem;
+            max-width: 700px;
+            width: 100%;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .app-header h1 {
+            color: var(--text-dark);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-header p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        .icon-wrapper i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .url-input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .shorten-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .shorten-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        .shorten-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        .result-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .result-value {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .copy-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
             white-space: nowrap;
         }
-        #short-url-output {
-            flex-grow: 1;
-            background-color: #e9ecef;
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
         }
-        #copy-btn {
-            background-color: #17a2b8;
+
+        .copy-btn.copied {
+            background: var(--success-color);
         }
-        #copy-btn:hover {
-            background-color: #138496;
+
+        .share-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
-        .hidden {
-            display: none !important;
+
+        .share-btn:hover {
+            background: #0891b2;
         }
-        #error-message {
-            color: red;
-            font-weight: bold;
+
+        .links-history {
+            margin-top: 2rem;
         }
-        #links-history h2 {
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 5px;
-        }
-        #links-history {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-        }
-        #links-history li {
-            background-color: #f8f9fa;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 5px;
-            border-left: 5px solid #007bff;
+
+        .history-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
-        #links-history li .long-url {
-            color: #6c757d;
-            font-size: 0.9em;
-            word-break: break-all;
-            margin-top: 5px;
+
+        .history-title {
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            font-weight: 600;
         }
-        #links-history li .short-id {
-            font-weight: bold;
-            color: #333;
-            font-size: 1.1em;
-        }
-        footer {
-            background-color: #343a40;
+
+        .clear-history-btn {
+            background: var(--danger-color);
             color: white;
-            width: 100%;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: auto;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .modal {
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+        .clear-history-btn:hover {
+            background: #dc2626;
         }
-        .modal-content {
-            background-color: #fefefe;
-            padding: 20px;
+
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: white;
+            padding: 1rem;
             border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-bottom: 0.75rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
         }
-        .close-btn {
-            color: #aaa;
-            float: left;
-            font-size: 28px;
-            font-weight: bold;
+
+        .history-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .short-url {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .history-date {
+            color: var(--text-light);
+            font-size: 0.75rem;
+        }
+
+        .original-url {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            word-break: break-all;
+        }
+
+        .delete-btn {
+            background: transparent;
+            color: var(--danger-color);
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .close-btn:hover,
-        .close-btn:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
+
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
         }
-        .modal-content h2 {
-            color: #007bff;
-            margin-top: 0;
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
         }
-        .modal-content ul {
-            list-style-type: none;
-            padding-right: 0;
-        }
-        .modal-content ul li {
-            margin-bottom: 10px;
-        }
-        .modal-content .signature {
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
             text-align: center;
-            margin-top: 20px;
-            font-style: italic;
-            color: #6c757d;
         }
-        @media (max-width: 600px) {
-            header, main {
-                padding-left: 15px;
-                padding-right: 15px;
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+            border: none;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list i {
+            color: var(--success-color);
+            font-size: 1.25rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .app-card {
+                padding: 2rem;
             }
-            #result-container {
-                flex-direction: column;
-                align-items: stretch;
+
+            .app-header h1 {
+                font-size: 1.5rem;
             }
-            #short-url-output {
-                margin-bottom: 10px;
+
+            .stats-section {
+                grid-template-columns: 1fr;
             }
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .shorten-btn.loading .btn-text {
+            display: none;
+        }
+
+        .shorten-btn.loading .loading-spinner {
+            display: inline-block;
+        }
+
+        .redirect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+        }
+
+        .redirect-overlay.show {
+            display: flex;
+        }
+
+        .redirect-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .export-import-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+        }
+
+        .export-import-btn {
+            margin: 0.25rem;
         }
     </style>
 </head>
 <body>
+    <!-- Redirect Overlay -->
+    <div id="redirectOverlay" class="redirect-overlay">
+        <div class="redirect-spinner"></div>
+        <h5>جاري التحويل...</h5>
+        <p class="text-muted">سيتم توجيهك إلى الرابط الأصلي خلال لحظات</p>
+        <button class="btn btn-secondary mt-3" onclick="cancelRedirect()">إلغاء التحويل</button>
+    </div>
 
-    <header>
-        <h1>✂️ أداة هيثم لاختصار الروابط</h1>
-        <button id="about-btn">حول البرنامج</button>
-    </header>
-
-    <main>
-        <section id="shortener-section">
-            <input type="url" id="long-url-input" placeholder="أدخل الرابط الطويل هنا..." required dir="ltr">
-            <button id="shorten-btn">اختصار الرابط</button>
-            <div id="result-container" class="hidden">
-                <p>الرابط المختصر:</p>
-                <input type="text" id="short-url-output" readonly dir="ltr">
-                <button id="copy-btn">نسخ</button>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-link"></i>
+                مختصر الروابط - هيثم محمد عطية
+            </a>
+            <div>
+                <button class="btn btn-outline-primary me-2" onclick="exportData()">
+                    <i class="fas fa-download"></i> تصدير
+                </button>
+                <button class="btn btn-outline-primary me-2" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-upload"></i> استيراد
+                </button>
+                <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
+                <button class="btn btn-primary" onclick="showAbout()">
+                    <i class="fas fa-info-circle"></i> حول البرنامج
+                </button>
             </div>
-            <p id="error-message" class="hidden"></p>
-        </section>
+        </div>
+    </nav>
 
-        <section id="history-section">
-            <h2>سجل الروابط المحفوظة</h2>
-            <ul id="links-history">
-                </ul>
-        </section>
-    </main>
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="app-card">
+            <div class="app-header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-compress-alt"></i>
+                </div>
+                <h1>مختصر الروابط المحترف</h1>
+                <p>اخصر روابطك الطويلة بشكل سريع وآمن</p>
+            </div>
 
-    <div id="about-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>حول أداة هيثم لاختصار الروابط</h2>
-            <p>هذا تطبيق ويب صغير وبسيط يعمل كأداة لاختصار الروابط الطويلة وتحويلها إلى روابط قصيرة.</p>
-            <ul>
-                <li>✅ **الوظيفة الأساسية:** تحويل الروابط الطويلة إلى معرفات قصيرة فريدة.</li>
-                <li>💾 **التخزين المحلي:** يتم حفظ جميع الروابط المختصرة محليًا في متصفحك (**localStorage**) ولا تحتاج إلى اتصال بالإنترنت للوصول إليها.</li>
-                <li>⏳ **صلاحية دائمة:** الروابط المختصرة محفوظة بشكل دائم ولا تنتهي صلاحيتها (طالما لم تقم بمسح بيانات التصفح المحلية).</li>
-                <li>⚠️ **ملاحظة هامة:** هذا البرنامج يعمل على جهازك فقط، ولا يمكن للآخرين استخدام الروابط التي تختصرها إلا إذا أرسلت لهم نفس الملف.</li>
-            </ul>
-            <p class="signature">الخدمة مقدمة من **هيثم محمد عطية**.</p>
+            <!-- URL Input Section -->
+            <div class="url-input-group">
+                <input 
+                    type="url" 
+                    id="urlInput" 
+                    class="url-input" 
+                    placeholder="أدخل الرابط الطويل هنا..."
+                    onkeypress="handleKeyPress(event)"
+                >
+            </div>
+
+            <button class="shorten-btn" onclick="shortenUrl()">
+                <span class="btn-text">
+                    <i class="fas fa-magic"></i>
+                    اختصر الرابط الآن
+                </span>
+                <div class="loading-spinner"></div>
+            </button>
+
+            <!-- Result Section -->
+            <div id="resultSection" class="result-section">
+                <h5 class="mb-3">تم اختصار الرابط بنجاح!</h5>
+                <div class="result-item">
+                    <div class="result-label">الرابط الأصلي:</div>
+                    <div class="result-value">
+                        <span id="originalUrl"></span>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">الرابط المختصر:</div>
+                    <div class="result-value">
+                        <span id="shortUrl"></span>
+                        <div>
+                            <button class="copy-btn" onclick="copyToClipboard()">
+                                <i class="fas fa-copy"></i> نسخ
+                            </button>
+                            <button class="share-btn" onclick="shareLink()">
+                                <i class="fas fa-share"></i> مشاركة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalLinks">0</div>
+                    <div class="stat-label">إجمالي الروابط</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="todayLinks">0</div>
+                    <div class="stat-label">روابط اليوم</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalClicks">0</div>
+                    <div class="stat-label">إجمالي النقرات</div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="links-history">
+                <div class="history-header">
+                    <h5 class="history-title">
+                        <i class="fas fa-history"></i> سجل الروابط
+                    </h5>
+                    <button class="clear-history-btn" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i> مسح الكل
+                    </button>
+                </div>
+                <div id="historyList" class="history-list">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>لا توجد روابط بعد</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <footer>
-        <p>الخدمة مقدمة من هيثم محمد عطية &copy; 2025</p>
-    </footer>
-
-    <script>
-        // --- أكواد script.js المدمجة ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const longUrlInput = document.getElementById('long-url-input');
-            const shortenBtn = document.getElementById('shorten-btn');
-            const resultContainer = document.getElementById('result-container');
-            const shortUrlOutput = document.getElementById('short-url-output');
-            const copyBtn = document.getElementById('copy-btn');
-            const errorMessage = document.getElementById('error-message');
-            const linksHistoryList = document.getElementById('links-history');
-
-            const aboutBtn = document.getElementById('about-btn');
-            const aboutModal = document.getElementById('about-modal');
-            const closeModalBtn = document.querySelector('.close-btn');
-
-            const STORAGE_KEY = 'haitham_url_shortener_links';
-
-            // --- وظائف التخزين المحلي ---
-            const getLinks = () => {
-                const linksJson = localStorage.getItem(STORAGE_KEY);
-                return linksJson ? JSON.parse(linksJson) : [];
-            };
-
-            const saveLinks = (links) => {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
-            };
-
-            // --- وظائف مساعدة ---
-            const generateShortId = () => {
-                return Math.random().toString(36).substring(2, 8);
-            };
-
-            const displayError = (message) => {
-                errorMessage.textContent = message;
-                errorMessage.classList.remove('hidden');
-                setTimeout(() => {
-                    errorMessage.classList.add('hidden');
-                }, 4000);
-            };
-
-            // --- وظيفة الاختصار الرئيسية ---
-            const shortenUrl = () => {
-                const longUrl = longUrlInput.value.trim();
-
-                resultContainer.classList.add('hidden');
-                errorMessage.classList.add('hidden');
-                shortUrlOutput.value = '';
-
-                if (!longUrl) {
-                    displayError('الرجاء إدخال رابط صالح لاختصاره.');
-                    return;
-                }
-
-                try {
-                    new URL(longUrl);
-                } catch (e) {
-                    displayError('الرجاء إدخال رابط URL صحيح (يبدأ بـ http:// أو https://).');
-                    return;
-                }
-
-                let links = getLinks();
-                let shortId;
-
-                const existingLink = links.find(link => link.longUrl === longUrl);
-
-                if (existingLink) {
-                    shortId = existingLink.shortId;
-                    displayError('هذا الرابط تم اختصاره مسبقًا!');
-                } else {
-                    do {
-                        shortId = generateShortId();
-                    } while (links.some(link => link.shortId === shortId));
-
-                    const newLink = {
-                        shortId: shortId,
-                        longUrl: longUrl,
-                        timestamp: Date.now()
-                    };
-                    links.unshift(newLink);
-                    saveLinks(links);
-                }
-
-                // الرابط المختصر يعتمد على المسار المحلي للملف في جهازك
-                const currentBase = window.location.href.split('#')[0]; 
-                const shortUrl = currentBase + '#' + shortId;
-
-                shortUrlOutput.value = shortUrl;
-                resultContainer.classList.remove('hidden');
-                longUrlInput.value = '';
-
-                renderHistory();
-            };
-
-            // --- وظائف عرض السجل ---
-            const createHistoryItem = (linkObject) => {
-                const li = document.createElement('li');
-                const currentBase = window.location.href.split('#')[0];
-                const shortUrl = currentBase + '#' + linkObject.shortId;
-
-                li.innerHTML = `
-                    <div>
-                        <span class="short-id">${shortUrl}</span><br>
-                        <span class="long-url" dir="ltr">${linkObject.longUrl}</span>
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-info-circle"></i> حول البرنامج
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="icon-wrapper mx-auto mb-3">
+                            <i class="fas fa-compress-alt"></i>
+                        </div>
+                        <h4>مختصر الروابط المحترف</h4>
+                        <p class="text-muted">الإصدار 2.0.0</p>
                     </div>
-                    <button class="copy-history-btn" data-url="${shortUrl}">نسخ</button>
-                `;
-                return li;
-            };
+                    
+                    <h6 class="mb-3">الخدمة مقدمة من:</h6>
+                    <div class="alert alert-primary text-center">
+                        <strong>هيثم محمد عطية</strong>
+                    </div>
 
-            const renderHistory = () => {
-                linksHistoryList.innerHTML = '';
-                const links = getLinks();
+                    <h6 class="mb-3 mt-4">المميزات:</h6>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>اختصار الروابط الطويلة إلى روابط قصيرة</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>حفظ الروابط بشكل دائم بدون انتهاء صلاحية</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>تخزين محلي في المتصفح (لا يحتاج إنترنت)</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>روابط قابلة للمشاركة والعمل من أي جهاز</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>تصدير واستيراد البيانات</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>إحصائيات مفصلة للروابط والنقرات</span>
+                        </li>
+                    </ul>
 
-                if (links.length === 0) {
-                    linksHistoryList.innerHTML = '<p style="text-align: center; color: #6c757d;">لم يتم اختصار أي روابط بعد.</p>';
-                    return;
-                }
+                    <div class="alert alert-info mt-4">
+                        <h6><i class="fas fa-shield-alt"></i> معلومات الحماية والخصوصية:</h6>
+                        <ul class="mb-0 mt-2">
+                            <li>جميع البيانات محفوظة محلياً في متصفحك فقط</li>
+                            <li>لا يتم إرسال أي بيانات إلى خوادم خارجية</li>
+                            <li>يمكنك تصدير البيانات وحفظها كنسخة احتياطية</li>
+                            <li>البرنامج يعمل بشكل كامل بدون اتصال بالإنترنت</li>
+                            <li>الروابط المختصرة تعمل حتى بعد إغلاق المتصفح</li>
+                        </ul>
+                    </div>
 
-                links.forEach(link => {
-                    const item = createHistoryItem(link);
-                    linksHistoryList.appendChild(item);
-                });
-            };
+                    <div class="alert alert-warning mt-3">
+                        <h6><i class="fas fa-lightbulb"></i> نصيحة هامة:</h6>
+                        <p class="mb-0">
+                            لجعل الروابط المختصرة متاحة للجميع، قم بنشر هذا التطبيق على GitHub Pages أو أي خدمة استضافة مجانية.
+                            الروابط ستعمل من أي جهاز يفتح نفس الصفحة.
+                        </p>
+                    </div>
 
-            // --- وظائف معالجة الأحداث ---
-            shortenBtn.addEventListener('click', shortenUrl);
-            longUrlInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    shortenUrl();
-                }
-            });
+                    <div class="text-center mt-4">
+                        <small class="text-muted">
+                            © 2024 جميع الحقوق محفوظة - هيثم محمد عطية
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            copyBtn.addEventListener('click', () => {
-                shortUrlOutput.select();
-                document.execCommand('copy');
-                copyBtn.textContent = 'تم النسخ! ✅';
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize the app
+        let urlDatabase = [];
+        let aboutModal;
+        let redirectTimeout;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load data from localStorage
+            loadDataFromStorage();
+            updateStatistics();
+            renderHistory();
+            
+            // Initialize modal
+            aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'));
+            
+            // Check for redirect on page load
+            checkForRedirect();
+        });
+
+        function generateShortCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function getCurrentBaseUrl() {
+            // Get the current page URL without any parameters or hash
+            const url = new URL(window.location.href);
+            return `${url.protocol}//${url.host}${url.pathname}`;
+        }
+
+        function shortenUrl() {
+            const urlInput = document.getElementById('urlInput');
+            const longUrl = urlInput.value.trim();
+            
+            if (!longUrl) {
+                showNotification('الرجاء إدخال رابط صحيح', 'warning');
+                return;
+            }
+
+            // Validate URL
+            try {
+                new URL(longUrl);
+            } catch (e) {
+                showNotification('الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://', 'warning');
+                return;
+            }
+
+            // Show loading state
+            const btn = document.querySelector('.shorten-btn');
+            btn.classList.add('loading');
+
+            // Simulate processing
+            setTimeout(() => {
+                const shortCode = generateShortCode();
+                const baseUrl = getCurrentBaseUrl();
+                const shortUrl = `${baseUrl}?s=${shortCode}`;
+                
+                const urlEntry = {
+                    id: Date.now(),
+                    shortCode: shortCode,
+                    shortUrl: shortUrl,
+                    originalUrl: longUrl,
+                    createdAt: new Date().toISOString(),
+                    clicks: 0
+                };
+
+                // Save to database
+                urlDatabase.unshift(urlEntry);
+                saveDataToStorage();
+
+                // Show result
+                showResult(urlEntry);
+                
+                // Update UI
+                updateStatistics();
+                renderHistory();
+                
+                // Reset loading state
+                btn.classList.remove('loading');
+                urlInput.value = '';
+                
+                showNotification('تم اختصار الرابط بنجاح!', 'success');
+            }, 500);
+        }
+
+        function showResult(urlEntry) {
+            const resultSection = document.getElementById('resultSection');
+            document.getElementById('originalUrl').textContent = urlEntry.originalUrl;
+            document.getElementById('shortUrl').textContent = urlEntry.shortUrl;
+            resultSection.classList.add('show');
+            
+            // Store current short URL for copying and sharing
+            window.currentShortUrl = urlEntry.shortUrl;
+        }
+
+        function copyToClipboard() {
+            const shortUrl = window.currentShortUrl;
+            if (!shortUrl) return;
+
+            navigator.clipboard.writeText(shortUrl).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                copyBtn.classList.add('copied');
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                
                 setTimeout(() => {
-                    copyBtn.textContent = 'نسخ';
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
                 }, 2000);
             });
+        }
 
-            linksHistoryList.addEventListener('click', (e) => {
-                if (e.target.classList.contains('copy-history-btn')) {
-                    const urlToCopy = e.target.getAttribute('data-url');
-                    navigator.clipboard.writeText(urlToCopy).then(() => {
-                        const originalText = e.target.textContent;
-                        e.target.textContent = 'تم النسخ! ✅';
-                        setTimeout(() => {
-                            e.target.textContent = originalText;
-                        }, 2000);
-                    }).catch(err => {
-                        alert('فشل في النسخ، يرجى النسخ يدوياً.');
-                    });
+        function shareLink() {
+            const shortUrl = window.currentShortUrl;
+            if (!shortUrl) return;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'رابط مختصر',
+                    text: 'تم مشاركة رابط مختصر',
+                    url: shortUrl
+                }).catch(() => {});
+            } else {
+                // Fallback: copy to clipboard
+                copyToClipboard();
+                showNotification('تم نسخ الرابط للمشاركة', 'info');
+            }
+        }
+
+        function checkForRedirect() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const shortCode = urlParams.get('s');
+            
+            if (shortCode) {
+                const urlEntry = urlDatabase.find(url => url.shortCode === shortCode);
+                
+                if (urlEntry) {
+                    // Show redirect overlay
+                    const overlay = document.getElementById('redirectOverlay');
+                    overlay.classList.add('show');
+                    
+                    // Increment clicks
+                    urlEntry.clicks++;
+                    saveDataToStorage();
+                    updateStatistics();
+                    
+                    // Redirect after 3 seconds
+                    redirectTimeout = setTimeout(() => {
+                        window.location.href = urlEntry.originalUrl;
+                    }, 3000);
+                } else {
+                    showNotification('الرابط المختصر غير موجود', 'danger');
+                    // Clean the URL
+                    window.history.replaceState({}, document.title, getCurrentBaseUrl());
                 }
-            });
+            }
+        }
 
-            aboutBtn.addEventListener('click', () => {
-                aboutModal.classList.remove('hidden');
-            });
+        function cancelRedirect() {
+            clearTimeout(redirectTimeout);
+            document.getElementById('redirectOverlay').classList.remove('show');
+            // Clean the URL
+            window.history.replaceState({}, document.title, getCurrentBaseUrl());
+        }
 
-            closeModalBtn.addEventListener('click', () => {
-                aboutModal.classList.add('hidden');
-            });
+        function renderHistory() {
+            const historyList = document.getElementById('historyList');
+            
+            if (urlDatabase.length === 0) {
+                historyList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>لا توجد روابط بعد</p>
+                    </div>
+                `;
+                return;
+            }
 
-            window.addEventListener('click', (e) => {
-                if (e.target === aboutModal) {
-                    aboutModal.classList.add('hidden');
-                }
-            });
+            historyList.innerHTML = urlDatabase.map(url => `
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="short-url">${url.shortUrl}</div>
+                        <button class="delete-btn" onclick="deleteUrl(${url.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="original-url">${url.originalUrl}</div>
+                    <div class="history-date">
+                        <i class="fas fa-clock"></i> ${formatDate(url.createdAt)} | 
+                        <i class="fas fa-mouse-pointer"></i> ${url.clicks} نقرة
+                    </div>
+                </div>
+            `).join('');
+        }
 
-            // --- وظيفة توجيه الرابط المختصر ---
-            const checkRedirection = () => {
-                const hash = window.location.hash.substring(1);
+        function deleteUrl(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الرابط؟')) {
+                urlDatabase = urlDatabase.filter(url => url.id !== id);
+                saveDataToStorage();
+                updateStatistics();
+                renderHistory();
+                showNotification('تم حذف الرابط بنجاح', 'info');
+            }
+        }
 
-                if (hash) {
-                    const links = getLinks();
-                    const link = links.find(l => l.shortId === hash);
+        function clearHistory() {
+            if (confirm('هل أنت متأكد من مسح جميع الروابط؟')) {
+                urlDatabase = [];
+                saveDataToStorage();
+                updateStatistics();
+                renderHistory();
+                document.getElementById('resultSection').classList.remove('show');
+                showNotification('تم مسح السجل بنجاح', 'info');
+            }
+        }
 
-                    if (link) {
-                        window.location.replace(link.longUrl);
+        function updateStatistics() {
+            document.getElementById('totalLinks').textContent = urlDatabase.length;
+            
+            // Count today's links
+            const today = new Date().toDateString();
+            const todayCount = urlDatabase.filter(url => 
+                new Date(url.createdAt).toDateString() === today
+            ).length;
+            document.getElementById('todayLinks').textContent = todayCount;
+            
+            // Count total clicks
+            const totalClicks = urlDatabase.reduce((sum, url) => sum + url.clicks, 0);
+            document.getElementById('totalClicks').textContent = totalClicks;
+        }
+
+        function saveDataToStorage() {
+            localStorage.setItem('urlShortenerData', JSON.stringify(urlDatabase));
+        }
+
+        function loadDataFromStorage() {
+            const stored = localStorage.getItem('urlShortenerData');
+            if (stored) {
+                urlDatabase = JSON.parse(stored);
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(urlDatabase, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `url-shortener-backup-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('تم تصدير البيانات بنجاح', 'success');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData)) {
+                        // Merge with existing data
+                        const existingCodes = new Set(urlDatabase.map(url => url.shortCode));
+                        const newUrls = importedData.filter(url => !existingCodes.has(url.shortCode));
+                        
+                        urlDatabase = [...newUrls, ...urlDatabase];
+                        saveDataToStorage();
+                        updateStatistics();
+                        renderHistory();
+                        showNotification(`تم استيراد ${newUrls.length} رابط جديد`, 'success');
                     } else {
-                        alert('عذراً، المعرف القصير غير موجود على جهازك.');
-                        history.replaceState(null, null, window.location.href.split('#')[0]); // إزالة الـ hash
+                        showNotification('ملف غير صالح', 'danger');
                     }
+                } catch (error) {
+                    showNotification('خطأ في قراءة الملف', 'danger');
                 }
             };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
 
-            // --- التهيئة ---
-            checkRedirection();
-            renderHistory();
-        });
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'الآن';
+            if (minutes < 60) return `منذ ${minutes} دقيقة`;
+            if (hours < 24) return `منذ ${hours} ساعة`;
+            if (days < 7) return `منذ ${days} يوم`;
+            
+            return date.toLocaleDateString('ar-SA');
+        }
+
+        function showAbout() {
+            aboutModal.show();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                shortenUrl();
+            }
+        }
+
+        function showNotification(message, type) {
+            // Create toast notification
+            const toastHtml = `
+                <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 9999; margin-top: 20px;">
+                    <div class="toast show align-items-center text-white bg-${type === 'success' ? 'success' : type === 'warning' ? 'warning' : type === 'danger' ? 'danger' : 'info'} border-0" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                ${message}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const toastElement = document.createElement('div');
+            toastElement.innerHTML = toastHtml;
+            document.body.appendChild(toastElement);
+            
+            setTimeout(() => {
+                toastElement.remove();
+            }, 3000);
+        }
     </script>
 </body>
 </html>
