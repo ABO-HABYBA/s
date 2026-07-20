@@ -1,0 +1,81 @@
+{
+  "app": {
+    "title": "QR Code Generator",
+    "subtitle": "Create comprehensive QR codes with all your contact info and social media",
+    "by": "By Hesham Mohammed Atia"
+  },
+  "language": {
+    "title": "Language",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "form": {
+    "personalInfo": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "fullName": "Full Name",
+    "jobTitle": "Job Title",
+    "company": "Company/Organization",
+    "email": "Email",
+    "phone": "Phone Number",
+    "mobile": "Mobile Number",
+    "fax": "Fax",
+    "website": "Website",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "postalCode": "Postal Code",
+    "note": "Note / Bio"
+  },
+  "social": {
+    "title": "Social Media",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "twitter": "Twitter / X",
+    "linkedin": "LinkedIn",
+    "youtube": "YouTube",
+    "tiktok": "TikTok",
+    "snapchat": "Snapchat",
+    "github": "GitHub",
+    "behance": "Behance",
+    "dribbble": "Dribbble",
+    "pinterest": "Pinterest",
+    "addMore": "Add More",
+    "add": "Add",
+    "remove": "Remove",
+    "custom": "Custom Social Media"
+  },
+  "qr": {
+    "title": "QR Code Preview",
+    "download": "Download",
+    "downloadPng": "Download as PNG",
+    "downloadPdf": "Download as PDF",
+    "size": "QR Code Size",
+    "color": "QR Code Color",
+    "bgColor": "Background Color",
+    "errorCorrection": "Error Correction Level",
+    "low": "Low",
+    "medium": "Medium",
+    "quartile": "Quartile",
+    "high": "High",
+    "scanMe": "Scan Me"
+  },
+  "buttons": {
+    "generate": "Generate QR Code",
+    "reset": "Reset All",
+    "copy": "Copy QR Data",
+    "copied": "Copied!"
+  },
+  "messages": {
+    "fillRequired": "Please fill in at least one field",
+    "generated": "QR Code generated successfully!",
+    "resetConfirm": "Are you sure you want to reset all fields?"
+  },
+  "footer": {
+    "copyright": "All rights reserved",
+    "developer": "Hesham Mohammed Atia",
+    "year": "2025"
+  }
+}
